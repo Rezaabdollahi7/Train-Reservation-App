@@ -10,8 +10,8 @@
     "preview": "vite preview",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepare": "husky install",
-    "pre-commit": "npm run format && npm run lint && npm run build" 
+    "prepare": "husky",
+    "pre-commit": "npm run format && npm run lint && npm run build"
   },
   "dependencies": {
     "antd": "^5.22.6",
