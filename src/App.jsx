@@ -2,6 +2,7 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { Button } from 'antd'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -28,6 +29,11 @@ function App() {
       <p className="read-the-docs">
         Click on the Vite and React logos to learn more
       </p>
+
+      <div className="bg-rose-300">
+        <h1 className="bg-rose-300">Ant Design Test</h1>
+        <Button type="primary">Test Button</Button>
+      </div>
     </>
   )
 }
