@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import Logo from '../assets/icons/train-icon.svg'
+import Logo from '../../assets/icons/train-icon.svg'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
