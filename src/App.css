@@ -6,5 +6,19 @@
 
 body {
   direction: rtl;
+  color: black;
   height: auto !important;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.982) !important;
+  overflow-x: hidden;
+}
+
+.ant-image-mask {
+  background-color: rgba(255, 255, 255, 0.282) !important;
+}
+
+.ant-image-mask-info {
+  background-color: #4096ff;
+  border-radius: 10px;
+  padding: 10px 20px !important;
 }
