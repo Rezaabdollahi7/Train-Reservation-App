@@ -6,4 +6,5 @@
 
 body {
   direction: rtl;
+  height: auto !important;
 }
