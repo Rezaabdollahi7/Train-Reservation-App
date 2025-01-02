@@ -22,7 +22,7 @@ const Navbar = () => {
         'text-neutrals3 heading-3 outline outline-1 outline-neutrals6 px-6 py-2 rounded-full',
     },
     {
-      to: '/signin',
+      to: '/signUp',
       label: 'ثبت‌نام',
       className:
         'px-6 py-2 bg-primary1 hover:bg-primary1-75 transition-all text-yellow-50 rounded-full heading-3',
