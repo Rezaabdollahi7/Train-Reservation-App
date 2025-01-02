@@ -1,10 +1,13 @@
-// src/firebase-config.js
 import { initializeApp } from 'firebase/app'
 import {
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  fetchSignInMethodsForEmail,
+  signInWithPopup,
 } from 'firebase/auth'
 
 // Firebase configuration
@@ -26,4 +29,8 @@ export {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  fetchSignInMethodsForEmail,
+  signInWithPopup,
 }
