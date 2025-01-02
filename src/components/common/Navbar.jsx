@@ -1,9 +1,22 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Logo from '../../assets/icons/train-icon.svg'
+import { auth, onAuthStateChanged } from '../../firebase/firebase-config'
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const [user, setUser] = useState(null)
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user)
+      } else {
+        setUser(null)
+      }
+    })
+
+    return () => unsubscribe()
+  }, [])
 
   const navLinks = [
     { to: '/', label: 'صفحه اصلی' },
@@ -22,7 +35,7 @@ const Navbar = () => {
         'text-neutrals3 heading-3 outline outline-1 outline-neutrals6 px-6 py-2 rounded-full',
     },
     {
-      to: '/signUp',
+      to: '/signup',
       label: 'ثبت‌نام',
       className:
         'px-6 py-2 bg-primary1 hover:bg-primary1-75 transition-all text-yellow-50 rounded-full heading-3',
@@ -54,11 +67,23 @@ const Navbar = () => {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden lg:flex items-center justify-between gap-4">
-            {authLinks.map((link, index) => (
-              <Link key={index} to={link.to} className={link.className}>
-                {link.label}
-              </Link>
-            ))}
+            {user ? (
+              <div className="flex items-center gap-4">
+                <span className="text-neutrals3">به سایتمون خوش اومدی!</span>
+                <button
+                  onClick={() => auth.signOut()}
+                  className="px-6 py-2 bg-red-500 hover:bg-red-600 transition-all text-white rounded-full heading-3"
+                >
+                  خروج
+                </button>
+              </div>
+            ) : (
+              authLinks.map((link, index) => (
+                <Link key={index} to={link.to} className={link.className}>
+                  {link.label}
+                </Link>
+              ))
+            )}
           </div>
 
           {/* Mobile Menu Button */}
@@ -101,11 +126,25 @@ const Navbar = () => {
 
               {/* Mobile Auth Buttons */}
               <div className="log-sign-wrapper flex gap-4 justify-center items-center w-full">
-                {authLinks.map((link, index) => (
-                  <Link key={index} to={link.to} className={link.className}>
-                    {link.label}
-                  </Link>
-                ))}
+                {user ? (
+                  <div className="flex flex-col items-center gap-4">
+                    <span className="text-neutrals3">
+                      به سایتمون خوش اومدی!
+                    </span>
+                    <button
+                      onClick={() => auth.signOut()}
+                      className="px-6 py-2 bg-red-500 hover:bg-red-600 transition-all text-white rounded-full heading-3"
+                    >
+                      خروج
+                    </button>
+                  </div>
+                ) : (
+                  authLinks.map((link, index) => (
+                    <Link key={index} to={link.to} className={link.className}>
+                      {link.label}
+                    </Link>
+                  ))
+                )}
               </div>
             </div>
           </div>

@@ -5,8 +5,8 @@
 
 A modern, user-friendly train ticket reservation system built with React and modern web technologies. Experience seamless booking, secure authentication, and an intuitive interface for all your train travel needs.
 
-
 ## 📋 Table of Contents
+
 - [Overview](#overview)
 - [Key Features](#key-features)
 - [Tech Stack](#tech-stack)
@@ -23,10 +23,12 @@ The Train Reservation System is a comprehensive web application that revolutioni
 ## ✨ Key Features
 
 - **User Authentication** 🔐
+
   - Firebase Authentication integration
   - Secure signup and login system
 
 - **Search & Booking** 🔍
+
   - Advanced search filters
   - Real-time seat availability with Firebase Realtime Database
   - E-ticket generation
@@ -42,6 +44,7 @@ The Train Reservation System is a comprehensive web application that revolutioni
 [![My Skills](https://skillicons.dev/icons?i=react,vite,firebase,tailwind,git,vercel,figma,vscode&theme=light)](https://skillicons.dev)
 
 ### Frontend:
+
 - **Framework**: React 18
 - **UI Components**: Ant Design
 - **Styling**: Tailwind CSS
@@ -49,12 +52,14 @@ The Train Reservation System is a comprehensive web application that revolutioni
 - **Routing**: React Router v6
 
 ### Backend:
+
 - **Database**: Firebase Firestore
 - **Authentication**: Firebase Auth
 - **Hosting**: Vercel Hosting
 - **Real-time Updates**: Firebase Realtime Database
 
 ### Development Tools:
+
 - Husky for Git hooks
 - Prettier for code formatting
 - ESLint for code linting
@@ -79,15 +84,19 @@ npm run dev
 ## 🚀 Usage
 
 1. **User Registration**:
+
    ```
    http://localhost:3000/register
    ```
+
    Create a new account with Firebase Authentication
 
 2. **Search Trains**:
+
    ```
    http://localhost:3000/search
    ```
+
    Use Ant Design filters to find the perfect train
 
 3. **Booking Process**:
