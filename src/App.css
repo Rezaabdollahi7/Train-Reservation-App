@@ -22,3 +22,13 @@ body {
   border-radius: 10px;
   padding: 10px 20px !important;
 }
+
+.rtl-input {
+  direction: ltr;
+  text-align: right;
+}
+
+.rtl-input .ant-input-prefix {
+  margin-right: 10px;
+  margin-left: 8px;
+}

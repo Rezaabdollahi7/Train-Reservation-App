@@ -8,6 +8,9 @@ import {
   GithubAuthProvider,
   fetchSignInMethodsForEmail,
   signInWithPopup,
+  setPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence,
 } from 'firebase/auth'
 
 // Firebase configuration
@@ -33,4 +36,7 @@ export {
   GithubAuthProvider,
   fetchSignInMethodsForEmail,
   signInWithPopup,
+  setPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence,
 }
