@@ -16,12 +16,12 @@ import { getFirestore } from 'firebase/firestore'
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyDTgDxeRs0U-QR7Gj2rAS5m0leXQi9D0aU',
-  authDomain: 'swiftrails-54e19.firebaseapp.com',
-  projectId: 'swiftrails-54e19',
-  storageBucket: 'swiftrails-54e19.appspot.com',
-  messagingSenderId: '1023346310863',
-  appId: '1:1023346310863:web:d485760b7eadfe49f8c1ba',
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
 
 // Initialize Firebase
