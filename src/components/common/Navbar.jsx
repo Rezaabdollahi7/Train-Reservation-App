@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Logo from '../../assets/icons/train-icon.svg'
 import { auth, onAuthStateChanged } from '../../firebase/firebase-config'
-
+import LanguageSwitcher from './LanguageSwitcher'
+import { useTranslation } from 'react-i18next'
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [user, setUser] = useState(null)
@@ -17,6 +18,8 @@ const Navbar = () => {
 
     return () => unsubscribe()
   }, [])
+
+  const { t } = useTranslation()
 
   const navLinks = [
     { to: '/', label: 'صفحه اصلی' },
@@ -49,7 +52,9 @@ const Navbar = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center gap-4">
             <img src={Logo} alt="Logo" className="h-12 w-12" />
-            <span className="ml-3 lg:heading-1 text-neutrals3">سوئیفت ریل</span>
+            <span className="ml-3 lg:heading-1 text-neutrals3">
+              {t('swift-rail')}
+            </span>
           </Link>
 
           {/* Desktop Navigation Links */}
@@ -67,6 +72,7 @@ const Navbar = () => {
 
           {/* Desktop Auth Buttons */}
           <div className="hidden lg:flex items-center justify-between gap-4">
+            <LanguageSwitcher />
             {user ? (
               <div className="flex items-center gap-4">
                 <span className="text-neutrals3">به سایتمون خوش اومدی!</span>
@@ -126,6 +132,7 @@ const Navbar = () => {
 
               {/* Mobile Auth Buttons */}
               <div className="log-sign-wrapper flex gap-4 justify-center items-center w-full">
+                <LanguageSwitcher />
                 {user ? (
                   <div className="flex flex-col items-center gap-4">
                     <span className="text-neutrals3">

@@ -1,0 +1,209 @@
+/* Dana Font Faces */
+@font-face {
+  font-family: dana;
+  font-style: normal;
+  font-weight: 10;
+  src:
+    url('./dana/woff2/Dana-Hairline.woff2') format('woff2'),
+    url('./dana/woff/Dana-Hairline.woff') format('woff');
+}
+
+@font-face {
+  font-family: dana;
+  font-style: normal;
+  font-weight: 100;
+  src:
+    url('./dana/woff2/Dana-Thin.woff2') format('woff2'),
+    url('./dana/woff/Dana-Thin.woff') format('woff');
+}
+
+@font-face {
+  font-family: dana;
+  font-style: normal;
+  font-weight: 200;
+  src:
+    url('./dana/woff2/Dana-UltraLight.woff2') format('woff2'),
+    url('./dana/woff/Dana-UltraLight.woff') format('woff');
+}
+
+@font-face {
+  font-family: dana;
+  font-style: normal;
+  font-weight: 300;
+  src:
+    url('./dana/woff2/Dana-Light.woff2') format('woff2'),
+    url('./dana/woff/Dana-Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: dana;
+  font-style: normal;
+  font-weight: 500;
+  src:
+    url('./dana/woff2/Dana-Medium.woff2') format('woff2'),
+    url('./dana/woff/Dana-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: dana;
+  font-style: normal;
+  font-weight: 600;
+  src:
+    url('./dana/woff2/Dana-DemiBold.woff2') format('woff2'),
+    url('./dana/woff/Dana-DemiBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: dana;
+  font-style: normal;
+  font-weight: 800;
+  src:
+    url('./dana/woff2/Dana-ExtraBold.woff2') format('woff2'),
+    url('./dana/woff/Dana-ExtraBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: dana;
+  font-style: normal;
+  font-weight: 900;
+  src:
+    url('./dana/woff2/Dana-Black.woff2') format('woff2'),
+    url('./dana/woff/Dana-Black.woff') format('woff');
+}
+
+@font-face {
+  font-family: dana;
+  font-style: normal;
+  font-weight: 930;
+  src:
+    url('./dana/woff2/Dana-ExtraBlack.woff2') format('woff2'),
+    url('./dana/woff/Dana-ExtraBlack.woff') format('woff');
+}
+
+@font-face {
+  font-family: dana;
+  font-style: normal;
+  font-weight: 960;
+  src:
+    url('./dana/woff2/Dana-Heavy.woff2') format('woff2'),
+    url('./dana/woff/Dana-Heavy.woff') format('woff');
+}
+
+@font-face {
+  font-family: dana;
+  font-style: normal;
+  font-weight: 990;
+  src:
+    url('./dana/woff2/Dana-Fat.woff2') format('woff2'),
+    url('./dana/woff/Dana-Fat.woff') format('woff');
+}
+
+@font-face {
+  font-family: dana;
+  font-style: normal;
+  font-weight: bold;
+  src:
+    url('./dana/woff2/Dana-ExtraBold.woff2') format('woff2'),
+    url('./dana/woff/Dana-ExtraBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: dana;
+  font-style: normal;
+  font-weight: normal;
+  src:
+    url('./dana/woff2/Dana-Regular.woff2') format('woff2'),
+    url('./dana/woff/Dana-Regular.woff') format('woff');
+}
+
+/* Poppins Font Faces */
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 100;
+  src:
+    url('./poppins/Poppins-Thin.woff2') format('woff2'),
+    url('./poppins/Poppins-Thin.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 200;
+  src:
+    url('./poppins/Poppins-ExtraLight.woff2') format('woff2'),
+    url('./poppins/Poppins-ExtraLight.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 300;
+  src:
+    url('./poppins/Poppins-Light.woff2') format('woff2'),
+    url('./poppins/Poppins-Light.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 400;
+  src:
+    url('./poppins/Poppins-Regular.woff2') format('woff2'),
+    url('./poppins/Poppins-Regular.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 500;
+  src:
+    url('./poppins/Poppins-Medium.woff2') format('woff2'),
+    url('./poppins/Poppins-Medium.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 600;
+  src:
+    url('./poppins/Poppins-SemiBold.woff2') format('woff2'),
+    url('./poppins/Poppins-SemiBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 700;
+  src:
+    url('./poppins/Poppins-Bold.woff2') format('woff2'),
+    url('./poppins/Poppins-Bold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 800;
+  src:
+    url('./poppins/Poppins-ExtraBold.woff2') format('woff2'),
+    url('./poppins/Poppins-ExtraBold.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: normal;
+  font-weight: 900;
+  src:
+    url('./poppins/Poppins-Black.woff2') format('woff2'),
+    url('./poppins/Poppins-Black.woff') format('woff');
+}
+
+/* Persian font */
+body[data-language='fa'] {
+  font-family: 'dana', sans-serif;
+}
+
+/* English font */
+body[data-language='en'] {
+  font-family: 'Poppins', sans-serif;
+}

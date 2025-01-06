@@ -17,8 +17,10 @@
     "@ant-design/icons": "^5.5.2",
     "antd": "^5.22.6",
     "firebase": "^11.1.0",
+    "i18next": "^24.2.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-i18next": "^15.4.0",
     "react-icons": "^5.4.0",
     "react-router-dom": "^7.1.1"
   },

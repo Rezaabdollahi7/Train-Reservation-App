@@ -24,3 +24,11 @@ body {
   min-width: 320px;
   min-height: 100vh;
 }
+
+body[data-language='fa'] {
+  direction: rtl;
+}
+
+body[data-language='en'] {
+  direction: ltr;
+}
