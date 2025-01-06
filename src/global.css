@@ -1,0 +1,57 @@
+/* Tailwind base styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Body styles */
+body {
+  font-weight: 400;
+  line-height: 1.5;
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  color: black;
+  height: auto !important;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.982) !important;
+  overflow-x: hidden;
+}
+
+/* Language-specific direction */
+body[data-language='fa'] {
+  direction: rtl;
+}
+
+body[data-language='en'] {
+  direction: ltr;
+}
+
+/* Root styles */
+#root {
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Ant Design image mask styles */
+.ant-image-mask {
+  background-color: rgba(255, 255, 255, 0.282) !important;
+}
+
+.ant-image-mask-info {
+  background-color: #4096ff;
+  border-radius: 10px;
+  padding: 10px 20px !important;
+}
+
+/* RTL input styles */
+.rtl-input {
+  direction: ltr;
+  text-align: right;
+}
+
+.rtl-input .ant-input-prefix {
+  margin-right: 10px;
+  margin-left: 8px;
+}
