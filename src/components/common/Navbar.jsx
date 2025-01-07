@@ -35,35 +35,35 @@ const Navbar = () => {
       to: '/login',
       label: 'ورود',
       className:
-        'text-neutrals3 heading-3 outline outline-1 outline-neutrals6 px-6 py-2 rounded-full',
+        'text-brightGray bg-fuelYellow/90 hover:bg-fuelYellow/80  font-semibold px-6 py-2 rounded-full transition-all ',
     },
     {
       to: '/signup',
       label: 'ثبت‌نام',
       className:
-        'px-6 py-2 bg-primary1 hover:bg-primary1-75 transition-all text-yellow-50 rounded-full heading-3',
+        'px-6 py-2 text-white bg-success hover:bg-success/80 font-semibold transition-all  rounded-full ',
     },
   ]
 
   return (
-    <nav className="bg-white shadow-md w-full">
+    <nav className="bg-white shadow-md w-full  ">
       <div className="container mx-auto px-4 w-4/5">
         <div className="flex justify-between items-center py-4">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-4">
             <img src={Logo} alt="Logo" className="h-12 w-12" />
-            <span className="ml-3 lg:heading-1 text-neutrals3">
+            <span className="ml-3 lg:heading-1 text-softBlue font-semibold">
               {t('swift-rail')}
             </span>
           </Link>
 
           {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex gap-8 text-gray-600">
+          <div className="hidden lg:flex gap-8 text-midGray">
             {navLinks.map((link, index) => (
               <Link
                 key={index}
                 to={link.to}
-                className="text-neutrals4 hover:text-neutrals2"
+                className="text-brightGray hover:text-softBlue transition-colors"
               >
                 {link.label}
               </Link>
@@ -124,7 +124,7 @@ const Navbar = () => {
                 <Link
                   key={index}
                   to={link.to}
-                  className="text-neutrals4 hover:text-neutrals2"
+                  className="text-brightGray hover:text-softBlue transition-colors"
                 >
                   {link.label}
                 </Link>

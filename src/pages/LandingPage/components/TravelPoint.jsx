@@ -10,11 +10,11 @@ const TravelPoint = () => {
 
       {/* Text Content */}
       <div className="points-text flex justify-center items-start flex-col col-span-12 lg:col-span-5 px-6 mt-5 lg:mt-0 lg:pr-8">
-        <h4 className="text-mypink font-bold text-xl">خرید بلیط قطار</h4>
-        <h6 className="my-5">
+        <h4 className="text-softBlue font-bold text-xl">خرید بلیط قطار</h4>
+        <h6 className="my-5 text-purpleHaze">
           ما بهتون کمک میکنیم تا بهترین تور هارو پیدا کنید
         </h6>
-        <p className="text-neutrals3-75 text-lg lg:w-4/5">
+        <p className="text-purpleHaze text-lg lg:w-4/5">
           خرید بلیط قطار هرساله به نسبت سال قبل محبوبیت بیشتری پیدا می‌کند؛
           ایمنی بالا، مقرون به‌صرفه بودن و امکانات خوب از ویژگی‌های یک وسیله
           نقلیه ایده آل برای سفر است و قطار همه این مشخصه‌ها را به طور هم‌زمان

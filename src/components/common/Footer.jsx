@@ -47,7 +47,7 @@ const Footer = () => {
 
   return (
     <footer
-      className="bg-white border-t px-6 container"
+      className="bg-[#f3f1ff] px-6 container"
       aria-labelledby="footer-heading"
     >
       <div className="mx-auto max-w-7xl  pb-8 pt-12 sm:pt-24  lg:pt-32">
@@ -60,7 +60,7 @@ const Footer = () => {
                 className="md:grid md:grid-cols-2  md:gap-8 lg:grid-cols-1 text-start"
               >
                 <div>
-                  <h3 className="text-sm lg:text-lg font-semibold leading-6 text-orange-500">
+                  <h3 className="text-sm lg:text-lg font-semibold leading-6 text-brightGray ">
                     {section.title}
                   </h3>
                   <ul role="list" className="mt-6 space-y-4">
@@ -68,7 +68,7 @@ const Footer = () => {
                       <li key={index}>
                         <a
                           href={item.href}
-                          className="text-sm leading-6 text-gray-900 hover:text-gray-400"
+                          className="text-sm leading-6 text-midGray hover:text-crocusPurple"
                         >
                           {item.label}
                         </a>

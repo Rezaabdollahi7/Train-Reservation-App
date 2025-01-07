@@ -2,7 +2,8 @@ import { useContext } from 'react'
 import { useTranslation } from 'react-i18next'
 import { LanguageContext } from '../../context/LanguageContext'
 import { Select } from 'antd'
-import { FaFlagUsa, FaFlag } from 'react-icons/fa'
+import iranFlag from '../../assets/icons/iran.png'
+import englandFlag from '../../assets/icons/england.avif'
 
 const { Option } = Select
 
@@ -21,17 +22,16 @@ const LanguageSwitcher = () => {
       defaultValue={language}
       style={{ width: 140 }}
       onChange={handleLanguageChange}
-      className="language-switcher"
+      className="language-switcher h-9"
     >
       <Option value="fa">
         <div className="flex items-center gap-2">
-          <FaFlag className="text-xl text-green-600" /> <span>فارسی</span>
+          <img src={iranFlag} className="w-6 h-6" /> <span>فارسی</span>
         </div>
       </Option>
       <Option value="en">
         <div className="flex items-center gap-2">
-          <FaFlagUsa className="text-xl text-blue-600" />
-          <span>English</span>
+          <img src={englandFlag} className="w-6 h-6" /> <span>English</span>
         </div>
       </Option>
     </Select>

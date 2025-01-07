@@ -18,15 +18,16 @@ const Header = () => {
       <div className="right-wrapper lg:col-span-4 flex flex-col items-end justify-center">
         <a
           href="#"
-          className="bg-white text-mypink rounded-3xl shadow-glow px-6 py-2 flex justify-center items-center gap-4"
+          className="text-white bg-crocusPurple rounded-3xl shadow-glow px-6 py-2 flex justify-center items-center gap-4"
         >
-          <span className="text-sm lg:text-base">هدیه ای به کل ایران</span>
+          <span className="text-sm lg:text-base ">هدیه ای به کل ایران</span>
           <GiftFilled />
         </a>
-        <h1 className="text-3xl lg:text-[60px] leading-10 lg:leading-[5rem] my-8 font-bold text-center lg:text-right">
-          بزرگترین مرجع <span className="text-mypink">رزرو بلیط </span> در ایران
+        <h1 className="text-3xl text-brightGray lg:text-[60px] leading-10 lg:leading-[5rem] my-8 font-bold text-center lg:text-right">
+          بزرگترین مرجع <span className="text-softBlue">رزرو بلیط </span> در
+          ایران
         </h1>
-        <p className="text-neutrals4-75 text-justify lg:text-right">
+        <p className="text-midGray text-justify lg:text-right">
           وبسایت رزرو بلیط جاییه که می‌تونی راحت و سریع بلیط مسافرتی و تورهای
           مختلف رو رزرو کنی. با پیشنهادهای ویژه و پشتیبانی عالی، سفر رو برات
           آسون و بی‌دغدغه می‌کنیم.
