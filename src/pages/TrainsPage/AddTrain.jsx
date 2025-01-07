@@ -14,6 +14,7 @@ import { db } from '../../firebase/firebase-config'
 import { collection, addDoc } from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
 import dayjs from 'dayjs'
+import { faker } from '@faker-js/faker' // Import faker
 
 const { Option } = Select
 const timeFormat = 'HH:mm'
@@ -27,7 +28,7 @@ const AddTrain = () => {
 
   // Calculate progress based on filled fields
   const calculateProgress = (values) => {
-    const totalFields = 11 // Total number of fields in the form (including seatType)
+    const totalFields = 14 // Total number of fields in the form (including new fields)
     const filledFields = Object.values(values).filter(
       (value) => value !== undefined && value !== ''
     ).length
@@ -60,6 +61,108 @@ const AddTrain = () => {
 
   const onValuesChange = (_, allValues) => {
     calculateProgress(allValues)
+  }
+
+  const addMultipleTrains = async () => {
+    setLoading(true)
+    try {
+      const trains = generateTrainData() // Generate 30 train records
+      for (const train of trains) {
+        await addDoc(collection(db, 'trains'), train)
+      }
+      message.success('30 trains added successfully!')
+    } catch (error) {
+      message.error('Failed to add trains: ' + error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const generateTrainData = () => {
+    const trains = []
+    const cities = [
+      'Tehran',
+      'Mashhad',
+      'Isfahan',
+      'Shiraz',
+      'Tabriz',
+      'Qom',
+      'Ahvaz',
+      'Kermanshah',
+      'Urmia',
+      'Rasht',
+      'Zahedan',
+      'Hamadan',
+      'Yazd',
+      'Ardabil',
+      'Bandar Abbas',
+      'Kerman',
+      'Sari',
+      'Gorgan',
+      'Birjand',
+      'Sanandaj',
+    ]
+
+    const companies = [
+      'Raja',
+      'Fadak',
+      'Iran Rail',
+      'Persian Express',
+      'Safir',
+      'Parsian',
+      'Zagros',
+      'Alborz',
+      'Caspian',
+      'Kourosh',
+    ]
+
+    const amenitiesOptions = [
+      'Wi-Fi',
+      'Food',
+      'Power Outlet',
+      'Air Conditioning',
+      'TV',
+      'Luggage Storage',
+      'Reclining Seats',
+      'USB Charger',
+      'Reading Light',
+      'Blanket',
+    ]
+
+    for (let i = 1; i <= 30; i++) {
+      const origin = faker.helpers.arrayElement(cities)
+      const destination = faker.helpers.arrayElement(
+        cities.filter((city) => city !== origin)
+      )
+
+      trains.push({
+        trainName: faker.lorem.words(2), // Random train name
+        company: faker.helpers.arrayElement(companies), // Random company
+        origin: origin,
+        destination: destination,
+        departureDate: faker.date.future().toISOString().split('T')[0], // Random future date
+        departureTime: faker.date.future().toLocaleTimeString('en-US', {
+          hour: '2-digit',
+          minute: '2-digit',
+        }), // Random time
+        capacity: faker.number.int({ min: 50, max: 200 }), // Random capacity
+        availableSeats: faker.number.int({ min: 10, max: 100 }), // Random available seats
+        price: faker.number.int({ min: 100000, max: 500000 }), // Random price
+        duration: faker.number.int({ min: 2, max: 12 }), // Random duration
+        seatType: faker.helpers.arrayElement([
+          'Economy',
+          'Business',
+          'First Class',
+        ]), // Random seat type
+        amenities: faker.helpers.arrayElements(amenitiesOptions, {
+          min: 1,
+          max: 5,
+        }), // Random amenities
+        rating: faker.number.int({ min: 1, max: 5 }), // Random rating
+        discount: faker.number.int({ min: 0, max: 20 }), // Random discount
+      })
+    }
+    return trains
   }
 
   if (isSuccess) {
@@ -244,6 +347,47 @@ const AddTrain = () => {
             </Select>
           </Form.Item>
 
+          <Form.Item
+            label="Amenities"
+            name="amenities"
+            rules={[
+              { required: true, message: 'Please select the amenities!' },
+            ]}
+          >
+            <Select mode="multiple" placeholder="Select amenities">
+              <Option value="Wi-Fi">Wi-Fi</Option>
+              <Option value="Food">Food</Option>
+              <Option value="Power Outlet">Power Outlet</Option>
+              <Option value="Air Conditioning">Air Conditioning</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            label="Rating"
+            name="rating"
+            rules={[{ required: true, message: 'Please enter the rating!' }]}
+          >
+            <Input
+              type="number"
+              placeholder="Enter rating (1-5)"
+              min={1}
+              max={5}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Discount"
+            name="discount"
+            rules={[{ required: true, message: 'Please enter the discount!' }]}
+          >
+            <Input
+              type="number"
+              placeholder="Enter discount (%)"
+              min={0}
+              max={100}
+            />
+          </Form.Item>
+
           <Form.Item>
             <Button
               type="primary"
@@ -252,6 +396,17 @@ const AddTrain = () => {
               className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded"
             >
               Add Train
+            </Button>
+          </Form.Item>
+
+          <Form.Item>
+            <Button
+              type="dashed"
+              onClick={addMultipleTrains}
+              loading={loading}
+              className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded"
+            >
+              Add 30 Trains Automatically
             </Button>
           </Form.Item>
         </Form>

@@ -46,13 +46,27 @@ const TrainList = () => {
       const matchesCompany = filters.company
         ? train.company === filters.company
         : true
+      const matchesAmenities = filters.amenities.length
+        ? filters.amenities.every((amenity) =>
+            train.amenities.includes(amenity)
+          )
+        : true
+      const matchesRating = filters.minRating
+        ? train.rating >= filters.minRating
+        : true
+      const matchesDiscount = filters.maxDiscount
+        ? train.discount <= filters.maxDiscount
+        : true
 
       return (
         matchesOrigin &&
         matchesDestination &&
         matchesDate &&
         matchesPassengers &&
-        matchesCompany
+        matchesCompany &&
+        matchesAmenities &&
+        matchesRating &&
+        matchesDiscount
       )
     })
 
@@ -65,6 +79,10 @@ const TrainList = () => {
       filtered.sort(
         (a, b) => new Date(a.departureDate) - new Date(b.departureDate)
       )
+    } else if (filters.sortBy === 'ratingDesc') {
+      filtered.sort((a, b) => b.rating - a.rating)
+    } else if (filters.sortBy === 'discountDesc') {
+      filtered.sort((a, b) => b.discount - a.discount)
     }
 
     setFilteredTrains(filtered)

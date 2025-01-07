@@ -11,8 +11,11 @@ const TrainFilter = ({ onFilter, companies }) => {
     destination: '',
     departureDate: null,
     passengers: 1,
-    sortBy: 'departureDate', // Default sorting by departure date
-    company: '', // Filter by company
+    sortBy: 'departureDate',
+    company: '',
+    amenities: [],
+    minRating: null,
+    maxDiscount: null,
   })
 
   const handleInputChange = (name, value) => {
@@ -26,21 +29,21 @@ const TrainFilter = ({ onFilter, companies }) => {
   return (
     <div className="p-4 bg-gray-100 rounded-lg mb-6">
       <Row gutter={16}>
-        <Col span={5}>
+        <Col span={4}>
           <Input
             placeholder="Origin"
             value={filters.origin}
             onChange={(e) => handleInputChange('origin', e.target.value)}
           />
         </Col>
-        <Col span={5}>
+        <Col span={4}>
           <Input
             placeholder="Destination"
             value={filters.destination}
             onChange={(e) => handleInputChange('destination', e.target.value)}
           />
         </Col>
-        <Col span={5}>
+        <Col span={4}>
           <DatePicker
             style={{ width: '100%' }}
             placeholder="Departure Date"
@@ -79,6 +82,50 @@ const TrainFilter = ({ onFilter, companies }) => {
         </Col>
         <Col span={4}>
           <Select
+            mode="multiple"
+            style={{ width: '100%' }}
+            placeholder="Amenities"
+            value={filters.amenities}
+            onChange={(value) => handleInputChange('amenities', value)}
+          >
+            <Option value="Wi-Fi">Wi-Fi</Option>
+            <Option value="Food">Food</Option>
+            <Option value="Power Outlet">Power Outlet</Option>
+            <Option value="Air Conditioning">Air Conditioning</Option>
+          </Select>
+        </Col>
+        <Col span={4}>
+          <Input
+            type="number"
+            placeholder="Min Rating"
+            value={filters.minRating}
+            onChange={(e) =>
+              handleInputChange(
+                'minRating',
+                e.target.value ? Number(e.target.value) : null
+              )
+            }
+            min={1}
+            max={5}
+          />
+        </Col>
+        <Col span={4}>
+          <Input
+            type="number"
+            placeholder="Max Discount"
+            value={filters.maxDiscount}
+            onChange={(e) =>
+              handleInputChange(
+                'maxDiscount',
+                e.target.value ? Number(e.target.value) : null
+              )
+            }
+            min={0}
+            max={100}
+          />
+        </Col>
+        <Col span={4}>
+          <Select
             style={{ width: '100%' }}
             placeholder="Sort By"
             value={filters.sortBy}
@@ -87,9 +134,11 @@ const TrainFilter = ({ onFilter, companies }) => {
             <Option value="departureDate">Nearest Departure</Option>
             <Option value="priceAsc">Price: Low to High</Option>
             <Option value="priceDesc">Price: High to Low</Option>
+            <Option value="ratingDesc">Rating: High to Low</Option>
+            <Option value="discountDesc">Discount: High to Low</Option>
           </Select>
         </Col>
-        <Col span={1}>
+        <Col span={2}>
           <Button
             type="primary"
             icon={<SearchOutlined />}
