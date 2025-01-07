@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
-import { Table } from 'antd'
 import { db } from '../../firebase/firebase-config'
 import { collection, getDocs } from 'firebase/firestore'
 import TrainFilter from './TrainFilter'
+import TrainCard from './TrainCard'
 
 const TrainList = () => {
   const [trains, setTrains] = useState([])
   const [filteredTrains, setFilteredTrains] = useState([])
+  const [companies, setCompanies] = useState([])
 
   useEffect(() => {
     const fetchTrains = async () => {
@@ -17,13 +18,19 @@ const TrainList = () => {
       }))
       setTrains(trainsList)
       setFilteredTrains(trainsList)
+
+      // Extract unique companies
+      const uniqueCompanies = [
+        ...new Set(trainsList.map((train) => train.company)),
+      ]
+      setCompanies(uniqueCompanies)
     }
 
     fetchTrains()
   }, [])
 
   const handleFilter = (filters) => {
-    const filtered = trains.filter((train) => {
+    let filtered = trains.filter((train) => {
       const matchesOrigin = filters.origin
         ? train.origin.toLowerCase().includes(filters.origin.toLowerCase())
         : true
@@ -36,88 +43,41 @@ const TrainList = () => {
         ? train.departureDate === filters.departureDate.format('YYYY-MM-DD')
         : true
       const matchesPassengers = train.availableSeats >= filters.passengers
+      const matchesCompany = filters.company
+        ? train.company === filters.company
+        : true
 
       return (
-        matchesOrigin && matchesDestination && matchesDate && matchesPassengers
+        matchesOrigin &&
+        matchesDestination &&
+        matchesDate &&
+        matchesPassengers &&
+        matchesCompany
       )
     })
+
+    // Apply sorting
+    if (filters.sortBy === 'priceAsc') {
+      filtered.sort((a, b) => a.price - b.price)
+    } else if (filters.sortBy === 'priceDesc') {
+      filtered.sort((a, b) => b.price - a.price)
+    } else if (filters.sortBy === 'departureDate') {
+      filtered.sort(
+        (a, b) => new Date(a.departureDate) - new Date(b.departureDate)
+      )
+    }
 
     setFilteredTrains(filtered)
   }
 
-  const uniqueCompanies = [...new Set(trains.map((train) => train.company))]
-
-  const columns = [
-    {
-      title: 'Train Name',
-      dataIndex: 'trainName',
-      key: 'trainName',
-    },
-    {
-      title: 'Company',
-      dataIndex: 'company',
-      key: 'company',
-      filters: uniqueCompanies.map((company) => ({
-        text: company,
-        value: company,
-      })),
-      onFilter: (value, record) => record.company === value,
-    },
-    {
-      title: 'Origin',
-      dataIndex: 'origin',
-      key: 'origin',
-    },
-    {
-      title: 'Destination',
-      dataIndex: 'destination',
-      key: 'destination',
-    },
-    {
-      title: 'Departure Date',
-      dataIndex: 'departureDate',
-      key: 'departureDate',
-      sorter: (a, b) => new Date(a.departureDate) - new Date(b.departureDate),
-    },
-    {
-      title: 'Departure Time',
-      dataIndex: 'departureTime',
-      key: 'departureTime',
-    },
-    {
-      title: 'Available Seats',
-      dataIndex: 'availableSeats',
-      key: 'availableSeats',
-    },
-    {
-      title: 'Price',
-      dataIndex: 'price',
-      key: 'price',
-      sorter: (a, b) => a.price - b.price,
-    },
-    {
-      title: 'Duration',
-      dataIndex: 'duration',
-      key: 'duration',
-    },
-    {
-      title: 'Seat Type',
-      dataIndex: 'seatType',
-      key: 'seatType',
-    },
-  ]
-
   return (
     <div className="p-4">
-      <TrainFilter onFilter={handleFilter} />
-      <Table
-        dataSource={filteredTrains}
-        columns={columns}
-        rowKey="id"
-        showSorterTooltip={{
-          target: 'sorter-icon',
-        }}
-      />
+      <TrainFilter onFilter={handleFilter} companies={companies} />
+      <div>
+        {filteredTrains.map((train) => (
+          <TrainCard key={train.id} train={train} />
+        ))}
+      </div>
     </div>
   )
 }
