@@ -5,6 +5,9 @@ import {
   GoogleAuthProvider,
   GithubAuthProvider,
   signInWithPopup,
+  setPersistence,
+  browserLocalPersistence,
+  browserSessionPersistence,
 } from '../../../firebase/firebase-config'
 import { Link, useNavigate } from 'react-router-dom'
 import { Checkbox, message, Spin } from 'antd'
@@ -74,6 +77,11 @@ const Login = () => {
     setIsLoading(true)
     setError('')
     try {
+      await setPersistence(
+        auth,
+        remember ? browserLocalPersistence : browserSessionPersistence
+      )
+
       const userCredential = await signInWithEmailAndPassword(
         auth,
         email,
@@ -109,6 +117,11 @@ const Login = () => {
     }
 
     try {
+      await setPersistence(
+        auth,
+        remember ? browserLocalPersistence : browserSessionPersistence
+      )
+
       const result = await signInWithPopup(auth, provider)
       const user = result.user
       console.log(`User logged in with ${providerName}:`, user)
@@ -123,17 +136,22 @@ const Login = () => {
 
       if (error.code === 'auth/account-exists-with-different-credential') {
         const email = error.customData.email
-        const methods = await auth.fetchSignInMethodsForEmail(email)
+        try {
+          const methods = await auth.fetchSignInMethodsForEmail(email)
 
-        if (methods.includes('password')) {
-          userFriendlyMessage =
-            'یک حساب با این ایمیل وجود دارد. لطفاً با ایمیل و رمز عبور وارد شوید.'
-        } else if (methods.includes('google.com')) {
-          userFriendlyMessage =
-            'یک حساب با این ایمیل وجود دارد. لطفاً با گوگل وارد شوید.'
-        } else {
-          userFriendlyMessage =
-            'یک حساب با این ایمیل وجود دارد. لطفاً با روش اصلی وارد شوید.'
+          if (methods.includes('password')) {
+            userFriendlyMessage =
+              'یک حساب با این ایمیل وجود دارد. لطفاً با ایمیل و رمز عبور وارد شوید.'
+          } else if (methods.includes('google.com')) {
+            userFriendlyMessage =
+              'یک حساب با این ایمیل وجود دارد. لطفاً با گوگل وارد شوید.'
+          } else {
+            userFriendlyMessage =
+              'یک حساب با این ایمیل وجود دارد. لطفاً با روش اصلی وارد شوید.'
+          }
+        } catch (fetchError) {
+          console.error('Error fetching sign-in methods:', fetchError)
+          userFriendlyMessage = 'خطایی در پردازش درخواست شما رخ داده است.'
         }
       }
 

@@ -11,6 +11,7 @@ import {
   setPersistence,
   browserLocalPersistence,
   browserSessionPersistence,
+  updateProfile,
 } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
@@ -42,4 +43,5 @@ export {
   browserLocalPersistence,
   browserSessionPersistence,
   db,
+  updateProfile,
 }

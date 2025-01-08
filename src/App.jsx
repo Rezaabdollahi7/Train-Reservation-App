@@ -5,6 +5,7 @@ import SignUp from './pages/LandingPage/components/SignUp'
 import Login from './pages/LandingPage/components/Login'
 import TrainList from './pages/TrainsPage/TrainList'
 import AddTrain from './pages/TrainsPage/AddTrain'
+import EditProfile from './components/common/EditProfile'
 function App() {
   return (
     <Router>
@@ -18,6 +19,7 @@ function App() {
         <Route path="/TrainList" element={<TrainList />} />
         <Route path="/login" element={<Login />} />
         <Route path="/AddTrain" element={<AddTrain />} />
+        <Route path="/EditProfile" element={<EditProfile />} />
       </Routes>
     </Router>
   )
