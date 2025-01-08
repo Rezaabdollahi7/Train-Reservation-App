@@ -1,12 +1,22 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import {
+  auth,
+  onAuthStateChanged,
+  signOut,
+} from '../../firebase/firebase-config'
 import Logo from '../../assets/icons/train-icon.svg'
-import { auth, onAuthStateChanged } from '../../firebase/firebase-config'
 import LanguageSwitcher from './LanguageSwitcher'
 import { useTranslation } from 'react-i18next'
+import { Dropdown, Menu, Avatar, message } from 'antd'
+import { LogoutOutlined, EditOutlined } from '@ant-design/icons'
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [user, setUser] = useState(null)
+  const navigate = useNavigate()
+  const { t } = useTranslation()
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -18,8 +28,6 @@ const Navbar = () => {
 
     return () => unsubscribe()
   }, [])
-
-  const { t } = useTranslation()
 
   const navLinks = [
     { to: '/', label: 'صفحه اصلی' },
@@ -44,6 +52,29 @@ const Navbar = () => {
         'px-6 py-2 text-white bg-success hover:bg-success/80 font-semibold transition-all  rounded-full ',
     },
   ]
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth)
+      message.success('با موفقیت خارج شدید!')
+      navigate('/')
+    } catch (error) {
+      console.error('Error during logout:', error)
+      message.error('خطایی در هنگام خروج رخ داده است.')
+    }
+  }
+
+  const menu = (
+    <Menu>
+      <Menu.Item key="1" icon={<EditOutlined />}>
+        <Link to="/EditProfile">ویرایش مشخصات</Link>
+      </Menu.Item>
+      <Menu.Divider />
+      <Menu.Item key="2" icon={<LogoutOutlined />} onClick={handleLogout}>
+        خروج
+      </Menu.Item>
+    </Menu>
+  )
 
   return (
     <nav className="bg-white shadow-md w-full  ">
@@ -75,13 +106,16 @@ const Navbar = () => {
             <LanguageSwitcher />
             {user ? (
               <div className="flex items-center gap-4">
-                <span className="text-neutrals3">به سایتمون خوش اومدی!</span>
-                <button
-                  onClick={() => auth.signOut()}
-                  className="px-6 py-2 bg-red-500 hover:bg-red-600 transition-all text-white rounded-full heading-3"
-                >
-                  خروج
-                </button>
+                <Dropdown overlay={menu} placement="bottomRight">
+                  <Avatar
+                    size="large"
+                    src={
+                      user.photoURL ||
+                      'https://cdn.alibaba.ir/h2/desktop/assets/images/avatar-4c776756.svg'
+                    }
+                    style={{ cursor: 'pointer' }}
+                  />
+                </Dropdown>
               </div>
             ) : (
               authLinks.map((link, index) => (
@@ -125,29 +159,36 @@ const Navbar = () => {
                   key={index}
                   to={link.to}
                   className="text-brightGray hover:text-softBlue transition-colors"
+                  onClick={() => setIsOpen(false)}
                 >
                   {link.label}
                 </Link>
               ))}
 
-              {/* Mobile Auth Buttons */}
+              {/* Mobile Auth Buttons / User Dropdown */}
               <div className="log-sign-wrapper flex gap-4 justify-center items-center w-full">
                 <LanguageSwitcher />
                 {user ? (
-                  <div className="flex flex-col items-center gap-4">
-                    <span className="text-neutrals3">
-                      به سایتمون خوش اومدی!
-                    </span>
-                    <button
-                      onClick={() => auth.signOut()}
-                      className="px-6 py-2 bg-red-500 hover:bg-red-600 transition-all text-white rounded-full heading-3"
-                    >
-                      خروج
-                    </button>
-                  </div>
+                  <Dropdown overlay={menu} placement="bottomRight">
+                    <div className="flex items-center gap-4 cursor-pointer">
+                      <Avatar
+                        size="large"
+                        src={
+                          user.photoURL ||
+                          'https://cdn.alibaba.ir/h2/desktop/assets/images/avatar-4c776756.svg'
+                        }
+                      />
+                      <span className="text-neutrals3">کاربر</span>
+                    </div>
+                  </Dropdown>
                 ) : (
                   authLinks.map((link, index) => (
-                    <Link key={index} to={link.to} className={link.className}>
+                    <Link
+                      key={index}
+                      to={link.to}
+                      className={link.className}
+                      onClick={() => setIsOpen(false)}
+                    >
                       {link.label}
                     </Link>
                   ))

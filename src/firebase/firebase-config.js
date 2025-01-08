@@ -12,6 +12,7 @@ import {
   browserLocalPersistence,
   browserSessionPersistence,
   updateProfile,
+  signOut,
 } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
@@ -44,4 +45,5 @@ export {
   browserSessionPersistence,
   db,
   updateProfile,
+  signOut,
 }
