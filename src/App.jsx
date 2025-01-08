@@ -6,6 +6,7 @@ import Login from './pages/LandingPage/components/Login'
 import TrainList from './pages/TrainsPage/TrainList'
 import AddTrain from './pages/TrainsPage/AddTrain'
 import EditProfile from './components/common/EditProfile'
+import NotFound from './pages/404/404'
 function App() {
   return (
     <Router>
@@ -20,6 +21,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/AddTrain" element={<AddTrain />} />
         <Route path="/EditProfile" element={<EditProfile />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
   )
