@@ -93,6 +93,9 @@ const SignUp = () => {
         photoURL: '',
         createdAt: new Date(),
         tickets: [],
+        phoneNumber: '', // افزودن فیلد شماره تماس
+        cardNumber: '', // افزودن فیلد شماره کارت
+        nationalCode: '', // افزودن فیلد کد ملی
       })
       console.log('User document set.')
 
@@ -134,6 +137,9 @@ const SignUp = () => {
           photoURL: user.photoURL || '',
           createdAt: new Date(),
           tickets: [],
+          phoneNumber: '',
+          cardNumber: '',
+          nationalCode: '',
         })
         console.log('User document for Google sign up set.')
       }
@@ -176,6 +182,9 @@ const SignUp = () => {
           photoURL: user.photoURL || '',
           createdAt: new Date(),
           tickets: [],
+          phoneNumber: '',
+          cardNumber: '',
+          nationalCode: '',
         })
         console.log('User document for GitHub sign up set.')
       }

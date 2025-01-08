@@ -8,6 +8,9 @@ import { useNavigate } from 'react-router-dom'
 const EditProfile = () => {
   const [displayName, setDisplayName] = useState('')
   const [photoURL, setPhotoURL] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [cardNumber, setCardNumber] = useState('')
+  const [nationalCode, setNationalCode] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
   const navigate = useNavigate()
@@ -22,6 +25,9 @@ const EditProfile = () => {
             const data = userDoc.data()
             setDisplayName(data.displayName || '')
             setPhotoURL(data.photoURL || '')
+            setPhoneNumber(data.phoneNumber || '')
+            setCardNumber(data.cardNumber || '')
+            setNationalCode(data.nationalCode || '')
           } else {
             message.error('اطلاعات کاربری یافت نشد.')
           }
@@ -38,8 +44,33 @@ const EditProfile = () => {
     return () => unsubscribe()
   }, [navigate])
 
+  const validateProfile = () => {
+    const phoneRegex = /^09[0-9]{9}$/
+    if (phoneNumber && !phoneRegex.test(phoneNumber)) {
+      message.error(
+        'شماره تماس نامعتبر است. شماره تماس باید با 09 شروع شود و 11 رقم داشته باشد.'
+      )
+      return false
+    }
+
+    const cardRegex = /^[0-9]{16}$/
+    if (cardNumber && !cardRegex.test(cardNumber)) {
+      message.error('شماره کارت باید شامل 16 رقم باشد.')
+      return false
+    }
+
+    const nationalCodeRegex = /^[0-9]{10}$/
+    if (nationalCode && !nationalCodeRegex.test(nationalCode)) {
+      message.error('کد ملی باید شامل 10 رقم باشد.')
+      return false
+    }
+
+    return true
+  }
+
   const handleUpdate = async (e) => {
     e.preventDefault()
+    if (!validateProfile()) return
     setIsLoading(true)
     try {
       const user = auth.currentUser
@@ -48,9 +79,11 @@ const EditProfile = () => {
         await updateDoc(userDocRef, {
           displayName,
           photoURL,
+          phoneNumber,
+          cardNumber,
+          nationalCode,
         })
 
-        // بروز رسانی اطلاعات در Firebase Authentication
         await updateProfile(user, {
           displayName,
           photoURL,
@@ -101,6 +134,54 @@ const EditProfile = () => {
               onChange={(e) => setPhotoURL(e.target.value)}
               className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary1 focus:border-primary1"
               placeholder="آدرس عکس پروفایل خود را وارد کنید"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="phoneNumber"
+              className="block text-sm font-medium text-gray-700"
+            >
+              شماره تماس
+            </label>
+            <input
+              type="text"
+              id="phoneNumber"
+              value={phoneNumber}
+              onChange={(e) => setPhoneNumber(e.target.value)}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary1 focus:border-primary1"
+              placeholder="مثال: 09219811980"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="cardNumber"
+              className="block text-sm font-medium text-gray-700"
+            >
+              شماره کارت
+            </label>
+            <input
+              type="text"
+              id="cardNumber"
+              value={cardNumber}
+              onChange={(e) => setCardNumber(e.target.value)}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary1 focus:border-primary1"
+              placeholder="شماره کارت خود را وارد کنید"
+            />
+          </div>
+          <div>
+            <label
+              htmlFor="nationalCode"
+              className="block text-sm font-medium text-gray-700"
+            >
+              کد ملی
+            </label>
+            <input
+              type="text"
+              id="nationalCode"
+              value={nationalCode}
+              onChange={(e) => setNationalCode(e.target.value)}
+              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary1 focus:border-primary1"
+              placeholder="کد ملی خود را وارد کنید"
             />
           </div>
           <button
