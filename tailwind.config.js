@@ -15,6 +15,8 @@ export default {
       brightGray: '#332c5c',
       purpleHaze: '#494369',
       midGray: '#5e587a',
+      bluePurple: '#4F7DF3',
+      bluePurpleBackground: '#E5EDFF',
 
       // Secondary Colors
       daySkyBlue: '#6dcbff',

@@ -89,9 +89,9 @@ const TrainList = () => {
   }
 
   return (
-    <div className="p-4">
+    <div className="p-4 container">
       <TrainFilter onFilter={handleFilter} companies={companies} />
-      <div>
+      <div className="grid lg:w-7/12">
         {filteredTrains.map((train) => (
           <TrainCard key={train.id} train={train} />
         ))}

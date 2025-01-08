@@ -16,7 +16,9 @@
   "dependencies": {
     "@ant-design/icons": "^5.5.2",
     "@faker-js/faker": "^9.3.0",
+    "@zoomit/dayjs-jalali-plugin": "^0.0.7",
     "antd": "^5.22.6",
+    "dayjs": "^1.11.13",
     "firebase": "^11.1.0",
     "i18next": "^24.2.0",
     "react": "^18.3.1",

@@ -1,123 +1,110 @@
 import PropTypes from 'prop-types'
-import { Card, Typography, Button, Tag } from 'antd'
+import { Card, Typography, Tag, Badge, Tooltip } from 'antd'
+import { BsTrainFreightFrontFill } from 'react-icons/bs'
+import { Rate } from 'antd'
+import dayjs from 'dayjs'
+import jalaliPlugin from '@zoomit/dayjs-jalali-plugin'
+import { IoTrainSharp } from 'react-icons/io5'
 
-const { Title, Text } = Typography
+dayjs.extend(jalaliPlugin)
+const { Text } = Typography
+
+const calculateArrivalTime = (departureTime, duration) => {
+  const departure = dayjs(departureTime, 'hh:mm A')
+  const arrival = departure.add(duration, 'hour')
+  return arrival.format('hh:mm A')
+}
 
 const TrainCard = ({ train }) => {
+  const arrivalTime = calculateArrivalTime(train.departureTime, train.duration)
+
   return (
-    <Card
-      className="
-        mb-6 
-        rounded-lg 
-        overflow-hidden 
-        shadow-md 
-        hover:shadow-lg 
-        transition-shadow 
-        border-l-8 border-fuelYellow 
-        bg-white 
-        p-6
-      "
-    >
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-        {/* بخش اطلاعات قطار */}
-        <div className="md:mr-4">
-          <Title level={4} className="mb-2 text-brightGray">
-            {train.trainName}
-          </Title>
-
-          <div className="mb-2">
-            <Text strong className="text-midGray">
-              مبدا:
-            </Text>{' '}
-            <span className="text-purpleHaze">{train.origin}</span>
+    <Card className="mb-6 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow bg-white">
+      <div className="flex flex-col justify-center items-start relative pb-4">
+        <div className="top-section flex justify-between items-center w-full p-5 bg-[#02314a]">
+          <div className="company-section flex items-center gap-2 text-white font-semibold">
+            <BsTrainFreightFrontFill className="text-white h-6 w-6" />
+            <span className="mt-1">{train.company}</span>
           </div>
-
-          <div className="mb-2">
-            <Text strong className="text-midGray">
-              مقصد:
-            </Text>{' '}
-            <span className="text-purpleHaze">{train.destination}</span>
-          </div>
-
-          <div className="mb-2">
-            <Text strong className="text-midGray">
-              تاریخ حرکت:
-            </Text>{' '}
-            <span className="text-midGray">{train.departureDate}</span> ساعت{' '}
-            <span className="text-midGray">{train.departureTime}</span>
-          </div>
-
-          <div className="mb-2">
-            <Text strong className="text-midGray">
-              ظرفیت باقیمانده:
-            </Text>{' '}
-            <span className="text-midGray">{train.availableSeats}</span>
-          </div>
-
-          <div className="mb-2">
-            <Text strong className="text-midGray">
-              قیمت:
-            </Text>{' '}
-            <span className="text-midGray">
-              {train.price.toLocaleString()} تومان
+          <div className="state-type flex items-center gap-2">
+            <Rate disabled defaultValue={train.rating} />
+            <span className="text-green-500 font-medium bg-[#ecfee4] px-3 py-1 rounded-lg">
+              {train.seatType}
             </span>
           </div>
+        </div>
 
-          <div className="mb-2">
-            <Text strong className="text-midGray">
-              مدت سفر:
-            </Text>{' '}
-            <span className="text-midGray">{train.duration} ساعت</span>
+        <div className="middle-section flex justify-between items-center w-full my-5 px-5">
+          <div className="origin-section flex flex-col justify-center items-center">
+            <div className="start-time mt-1 text-brightGray font-bold text-3xl">
+              {train.departureTime}
+            </div>
+            <span className="text-softBlue font-semibold">{train.origin}</span>
           </div>
 
-          <div className="mb-2">
-            <Text strong className="text-midGray">
-              نوع صندلی:
-            </Text>{' '}
-            <span className="text-midGray">{train.seatType}</span>
+          <div className="duration-time flex justify-center items-center relative">
+            <Tooltip
+              title="Travel Duration"
+              className="flex justify-center items-center"
+            >
+              <p className="absolute -top-2 flex items-center gap-2 text-[#fdba09] bg-[#fff1ce] px-4 rounded-lg py-1 font-medium">
+                <IoTrainSharp className="w-5 h-5" />
+                {train.duration} ساعت
+              </p>
+              <span className="w-4 h-4 bg-info rounded-full"></span>
+              <span className="w-64 h-[1px] bg-gray-200"></span>
+              <span className="w-4 h-4 bg-white border border-info rounded-full"></span>
+            </Tooltip>
           </div>
 
+          <div className="destination-section flex flex-col justify-center items-center">
+            <div className="start-time mt-1 text-brightGray font-bold text-3xl">
+              {arrivalTime}
+            </div>
+            <span className="text-softBlue font-semibold">
+              {train.destination}
+            </span>
+          </div>
+        </div>
+
+        <div className="flex justify-between items-center w-full px-6 my-3">
           <div className="mb-2">
             <Text strong className="text-midGray">
-              امکانات:
+              امکانات :
             </Text>{' '}
             {train.amenities.map((amenity, index) => (
-              <Tag key={index} className="bg-info text-white border-none m-1">
+              <Tag
+                key={index}
+                className="bg-gray-100 text-gray-500 border-none m-1 rounded-xl px-3"
+              >
                 {amenity}
               </Tag>
             ))}
           </div>
-
           <div className="mb-2">
             <Text strong className="text-midGray">
-              امتیاز:
+              تاریخ حرکت :
             </Text>{' '}
-            <span className="text-success">{train.rating} / 5</span>
-          </div>
-
-          <div className="mb-2">
-            <Text strong className="text-midGray">
-              تخفیف:
-            </Text>{' '}
-            <span className="text-error">{train.discount}%</span>
+            <span className="text-midGray font-medium">
+              {train.departureDate}
+            </span>
           </div>
         </div>
 
-        <Button
-          type="primary"
-          size="large"
-          className="
-            bg-fuelYellow 
-            border-fuelYellow 
-            hover:bg-opacity-90 
-            hover:border-fuelYellow 
-            text-white 
-            mt-4 
-            md:mt-0
-          "
-        >
-          انتخاب
-        </Button>
+        <div className="bottom-section flex justify-between items-center w-full mt-3 pt-3 border-t px-8">
+          <div className="count bg-gray-100 px-2 py-1 rounded-lg">
+            <Text strong className="text-midGray">
+              ظرفیت باقی مانده:
+            </Text>{' '}
+            <span className="text-midGray">{train.availableSeats}</span>
+          </div>
+          <div className="price flex items-center gap-2">
+            <Badge count={`% ${train.discount}`} />
+            <span className="text-brightGray font-bold text-xl">
+              {train.price.toLocaleString()} تومان
+            </span>
+          </div>
+        </div>
       </div>
     </Card>
   )
@@ -126,6 +113,7 @@ const TrainCard = ({ train }) => {
 TrainCard.propTypes = {
   train: PropTypes.shape({
     trainName: PropTypes.string.isRequired,
+    company: PropTypes.string.isRequired,
     origin: PropTypes.string.isRequired,
     destination: PropTypes.string.isRequired,
     departureDate: PropTypes.string.isRequired,

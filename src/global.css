@@ -55,3 +55,8 @@ body[data-language='en'] {
   margin-right: 10px;
   margin-left: 8px;
 }
+
+.ant-card .ant-card-body {
+  padding: 0 !important;
+  font-family: 'Dana';
+}
