@@ -9,8 +9,10 @@ import {
   setPersistence,
   browserLocalPersistence,
   browserSessionPersistence,
+  createUserWithEmailAndPassword,
 } from '../../../firebase/firebase-config'
-import { Checkbox, message } from 'antd'
+import { doc, setDoc, getDoc } from 'firebase/firestore'
+import { Checkbox, message, Spin } from 'antd'
 import { MdAlternateEmail } from 'react-icons/md'
 import { TbPasswordFingerprint } from 'react-icons/tb'
 import CustomInput from '../../../components/common/CustomInput'
@@ -19,6 +21,7 @@ import { FcGoogle } from 'react-icons/fc'
 import { FaGithubSquare } from 'react-icons/fa'
 import trainIcon from '../../../assets/icons/train-icon.svg'
 import loginImg from '../../../assets/images/login2.jpg'
+import { db } from '../../../firebase/firebase-config'
 
 const SignUp = () => {
   const [email, setEmail] = useState('')
@@ -66,14 +69,37 @@ const SignUp = () => {
 
     setIsLoading(true)
     try {
+      console.log('Setting persistence...')
       await setPersistence(
         auth,
         remember ? browserLocalPersistence : browserSessionPersistence
       )
+      console.log('Persistence set.')
+
+      console.log('Creating user with email and password...')
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      )
+      const user = userCredential.user
+      console.log('User created:', user)
+
+      console.log('Setting user document in Firestore...')
+      await setDoc(doc(db, 'users', user.uid), {
+        uid: user.uid,
+        email: user.email,
+        displayName: '',
+        photoURL: '',
+        createdAt: new Date(),
+        tickets: [],
+      })
+      console.log('User document set.')
 
       message.success('ثبت‌نام موفقیت‌آمیز بود!')
       navigate('/')
     } catch (error) {
+      console.error('Error during sign up:', error)
       const userFriendlyMessage = getErrorMessage(error)
       message.error(userFriendlyMessage)
     } finally {
@@ -85,15 +111,37 @@ const SignUp = () => {
     setIsLoading(true)
     const provider = new GoogleAuthProvider()
     try {
+      console.log('Setting persistence for Google sign up...')
       await setPersistence(
         auth,
         remember ? browserLocalPersistence : browserSessionPersistence
       )
+      console.log('Persistence set for Google sign up.')
 
-      await signInWithPopup(auth, provider)
+      console.log('Signing in with Google...')
+      const result = await signInWithPopup(auth, provider)
+      const user = result.user
+      console.log('Google sign up user:', user)
+
+      const userDocRef = doc(db, 'users', user.uid)
+      const userDoc = await getDoc(userDocRef)
+      if (!userDoc.exists()) {
+        console.log('Creating user document for Google sign up...')
+        await setDoc(userDocRef, {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName || '',
+          photoURL: user.photoURL || '',
+          createdAt: new Date(),
+          tickets: [],
+        })
+        console.log('User document for Google sign up set.')
+      }
+
       message.success('ثبت‌نام با گوگل موفقیت‌آمیز بود!')
       navigate('/')
     } catch (error) {
+      console.error('Error during Google sign up:', error)
       const userFriendlyMessage = getErrorMessage(error)
       message.error(userFriendlyMessage)
     } finally {
@@ -105,15 +153,37 @@ const SignUp = () => {
     setIsLoading(true)
     const provider = new GithubAuthProvider()
     try {
+      console.log('Setting persistence for GitHub sign up...')
       await setPersistence(
         auth,
         remember ? browserLocalPersistence : browserSessionPersistence
       )
+      console.log('Persistence set for GitHub sign up.')
 
-      await signInWithPopup(auth, provider)
+      console.log('Signing in with GitHub...')
+      const result = await signInWithPopup(auth, provider)
+      const user = result.user
+      console.log('GitHub sign up user:', user)
+
+      const userDocRef = doc(db, 'users', user.uid)
+      const userDoc = await getDoc(userDocRef)
+      if (!userDoc.exists()) {
+        console.log('Creating user document for GitHub sign up...')
+        await setDoc(userDocRef, {
+          uid: user.uid,
+          email: user.email,
+          displayName: user.displayName || '',
+          photoURL: user.photoURL || '',
+          createdAt: new Date(),
+          tickets: [],
+        })
+        console.log('User document for GitHub sign up set.')
+      }
+
       message.success('ثبت‌نام با گیت‌هاب موفقیت‌آمیز بود!')
       navigate('/')
     } catch (error) {
+      console.error('Error during GitHub sign up:', error)
       if (error.code === 'auth/account-exists-with-different-credential') {
         try {
           const email = error.customData.email
@@ -133,6 +203,7 @@ const SignUp = () => {
             )
           }
         } catch (fetchError) {
+          console.error('Error fetching sign-in methods:', fetchError)
           const userFriendlyMessage = getErrorMessage(fetchError)
           message.error(userFriendlyMessage)
         }
@@ -218,7 +289,14 @@ const SignUp = () => {
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 aria-label="ثبت نام"
               >
-                {isLoading ? 'در حال ثبت‌نام...' : 'ثبت نام'}
+                {isLoading ? (
+                  <div className="flex items-center gap-2">
+                    <span>در حال ثبت‌نام</span>
+                    <Spin size="small" />
+                  </div>
+                ) : (
+                  'ثبت نام'
+                )}
               </button>
             </form>
 
