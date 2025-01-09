@@ -4,30 +4,48 @@ import {
   auth,
   onAuthStateChanged,
   signOut,
+  db,
 } from '../../firebase/firebase-config'
+import { doc, onSnapshot } from 'firebase/firestore'
 import Logo from '../../assets/icons/train-icon.svg'
 import LanguageSwitcher from './LanguageSwitcher'
 import { useTranslation } from 'react-i18next'
-import { Dropdown, Menu, Avatar, message } from 'antd'
+import { Dropdown, Menu, Avatar, message, Badge } from 'antd'
 import { LogoutOutlined, EditOutlined } from '@ant-design/icons'
 import { ShoppingOutlined } from '@ant-design/icons'
 import { TbTicket } from 'react-icons/tb'
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [user, setUser] = useState(null)
+  const [cartCount, setCartCount] = useState(0)
+  const [purchasedTicketsCount, setPurchasedTicketsCount] = useState(0)
   const navigate = useNavigate()
   const { t } = useTranslation()
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribeAuth = onAuthStateChanged(auth, async (user) => {
       if (user) {
         setUser(user)
+
+        const userRef = doc(db, 'users', user.uid)
+        const unsubscribeFirestore = onSnapshot(userRef, (doc) => {
+          if (doc.exists()) {
+            const userData = doc.data()
+            setCartCount(userData.tickets?.length || 0)
+            setPurchasedTicketsCount(userData.purchasedTickets?.length || 0)
+          }
+        })
+
+        return () => unsubscribeFirestore()
       } else {
         setUser(null)
+        setCartCount(0)
+        setPurchasedTicketsCount(0)
       }
     })
 
-    return () => unsubscribe()
+    return () => unsubscribeAuth()
   }, [])
 
   const navLinks = [
@@ -74,10 +92,18 @@ const Navbar = () => {
         key="2"
         icon={<ShoppingOutlined style={{ fontSize: '18px' }} />}
       >
-        <Link to="/cart">سبد خرید </Link>
+        <Link to="/cart">
+          سبد خرید <Badge count={cartCount} className="text-error" />
+        </Link>
       </Menu.Item>
       <Menu.Item key="3" icon={<TbTicket style={{ fontSize: '18px' }} />}>
-        <Link to="/purchased-tickets"> بلیط ها</Link>
+        <Link to="/purchased-tickets">
+          بلیط‌ها{' '}
+          <Badge
+            count={purchasedTicketsCount}
+            style={{ backgroundColor: '#52c41a' }}
+          />
+        </Link>
       </Menu.Item>
       <Menu.Divider />
       <Menu.Item
