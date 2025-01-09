@@ -11,11 +11,11 @@ import {
   Card,
   Divider,
 } from 'antd'
+import { LuShieldQuestion } from 'react-icons/lu'
 import {
   PhoneOutlined,
   MailOutlined,
   QuestionCircleOutlined,
-  SettingOutlined,
   ExclamationCircleOutlined,
   MessageOutlined,
   SendOutlined,
@@ -30,7 +30,6 @@ const { Option } = Select
 const SupportPage = () => {
   const [loading, setLoading] = useState(true)
 
-  // شبیه‌سازی بارگذاری داده‌ها
   useEffect(() => {
     const timer = setTimeout(() => {
       setLoading(false)
@@ -38,17 +37,8 @@ const SupportPage = () => {
     return () => clearTimeout(timer)
   }, [])
 
-  // آیکون تنظیمات در سوالات متداول
-  const genExtra = () => (
-    <SettingOutlined
-      onClick={(event) => {
-        event.stopPropagation()
-        message.info('در صورت نیاز می‌توانید سوال خود را ویرایش کنید.')
-      }}
-    />
-  )
+  const genExtra = () => <LuShieldQuestion className="w-6 h-6" />
 
-  // سوالات متداول
   const faqItems = [
     {
       key: '1',
@@ -108,13 +98,12 @@ const SupportPage = () => {
     },
   ]
 
-  // فرم ارسال تیکت
   const [form] = Form.useForm()
   const [submitting, setSubmitting] = useState(false)
 
   const onFinish = () => {
     setSubmitting(true)
-    // شبیه‌سازی ارسال تیکت
+
     setTimeout(() => {
       setSubmitting(false)
       message.success('تیکت شما با موفقیت ارسال شد.')
@@ -122,10 +111,9 @@ const SupportPage = () => {
     }, 2000)
   }
 
-  // تب جدید "ارسال تیکت" یا فرم تماس
   const TicketForm = () => (
     <div className="p-6 ">
-      <h2 className="text-2xl font-bold text-blue-600 mb-4">ارسال تیکت</h2>
+      <h2 className="text-2xl font-bold text-info mb-4">ارسال تیکت</h2>
       {loading ? (
         <Skeleton active paragraph={{ rows: 5 }} />
       ) : (
@@ -231,10 +219,9 @@ const SupportPage = () => {
       <div className="min-h-screen bg-gray-100 py-12 ">
         <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
           <Tabs className="w-full ">
-            {/* تب "تماس با ما" */}
             <TabPane
               tab={
-                <span className="flex items-center space-x-4  gap-1 ">
+                <span className="flex items-center space-x-4   ">
                   <PhoneOutlined />
                   <span>تماس با ما</span>
                 </span>
@@ -242,29 +229,29 @@ const SupportPage = () => {
               key="1"
             >
               <div className="p-6">
-                <h2 className="text-2xl font-bold text-blue-600 mb-4">
+                <h2 className="text-2xl font-bold text-info mb-4">
                   تماس با پشتیبانی
                 </h2>
                 {loading ? (
                   <Skeleton active paragraph={{ rows: 3 }} />
                 ) : (
                   <>
-                    <p className="text-gray-700 mb-4">
+                    <p className="text-midGray mb-4">
                       برای تماس با پشتیبانی، می‌توانید از طریق شماره‌های زیر با
                       ما در ارتباط باشید:
                     </p>
-                    <ul className="list-disc pl-6 mb-4">
-                      <li className="text-gray-700">
+                    <ul className="list-disc ps-4  mb-4">
+                      <li className="text-midGray">
                         شماره تماس ۱: ۰۲۱-۱۲۳۴۵۶۷
                       </li>
-                      <li className="text-gray-700">
+                      <li className="text-midGray">
                         شماره تماس ۲: ۰۹۱۲-۱۲۳۴۵۶۷
                       </li>
                     </ul>
-                    <p className="text-gray-700 mb-2">
+                    <p className="text-midGray mb-2">
                       ساعات پاسخگویی: شنبه تا چهارشنبه، ۹ صبح تا ۵ بعدازظهر
                     </p>
-                    <p className="text-gray-700">
+                    <p className="text-midGray">
                       در صورت تماس خارج از ساعات اداری، می‌توانید از طریق ارسال
                       تیکت یا ایمیل اقدام کنید.
                     </p>
@@ -273,10 +260,9 @@ const SupportPage = () => {
               </div>
             </TabPane>
 
-            {/* تب "ارسال ایمیل" */}
             <TabPane
               tab={
-                <span className="flex items-center space-x-4  gap-1 ">
+                <span className="flex items-center space-x-4   ">
                   <MailOutlined />
                   <span>ارسال ایمیل</span>
                 </span>
@@ -284,25 +270,25 @@ const SupportPage = () => {
               key="2"
             >
               <div className="p-6">
-                <h2 className="text-2xl font-bold text-blue-600 mb-4">
+                <h2 className="text-2xl font-bold text-info mb-4">
                   ارسال ایمیل به پشتیبانی
                 </h2>
                 {loading ? (
                   <Skeleton active paragraph={{ rows: 3 }} />
                 ) : (
                   <>
-                    <p className="text-gray-700 mb-4">
+                    <p className="text-midGray mb-4">
                       برای ارسال ایمیل به پشتیبانی، می‌توانید از آدرس ایمیل زیر
                       استفاده کنید:
                     </p>
-                    <p className="text-gray-700 mb-4">
+                    <p className="text-midGray mb-4">
                       <strong>ایمیل پشتیبانی:</strong> support@example.com
                     </p>
-                    <p className="text-gray-700 mb-4">
+                    <p className="text-midGray mb-4">
                       لطفاً در هنگام ارسال ایمیل، موضوع و توضیحات خود را به طور
                       کامل وارد کنید تا کارشناسان ما در اسرع وقت پاسخگو باشند.
                     </p>
-                    <p className="text-gray-700">
+                    <p className="text-midGray">
                       همچنین می‌توانید اطلاعات تماس و شماره سفارش خود را در
                       ایمیل بگنجانید تا روند پیگیری سریع‌تر انجام شود.
                     </p>
@@ -311,10 +297,9 @@ const SupportPage = () => {
               </div>
             </TabPane>
 
-            {/* تب "سوالات متداول" */}
             <TabPane
               tab={
-                <span className="flex items-center space-x-4  gap-1 ">
+                <span className="flex items-center space-x-4   ">
                   <QuestionCircleOutlined />
                   <span>سوالات متداول</span>
                 </span>
@@ -322,7 +307,7 @@ const SupportPage = () => {
               key="3"
             >
               <div className="p-6">
-                <h2 className="text-2xl font-bold text-blue-600 mb-4">
+                <h2 className="text-2xl font-bold text-info mb-4">
                   سوالات متداول
                 </h2>
                 {loading ? (
@@ -335,9 +320,11 @@ const SupportPage = () => {
                           header={item.label}
                           key={item.key}
                           extra={item.extra}
-                          className="mb-2 rounded-lg"
+                          className="mb-2 rounded-lg text-base font-semibold"
                         >
-                          <div className="text-gray-700">{item.children}</div>
+                          <div className="text-purpleHaze font-normal">
+                            {item.children}
+                          </div>
                         </Panel>
                       ))}
                     </Collapse>
@@ -346,10 +333,9 @@ const SupportPage = () => {
               </div>
             </TabPane>
 
-            {/* تب جدید: "ارسال تیکت" */}
             <TabPane
               tab={
-                <span className="flex items-center space-x-4  gap-1 ">
+                <span className="flex items-center space-x-4   ">
                   <MessageOutlined />
                   <span>ارسال تیکت</span>
                 </span>
