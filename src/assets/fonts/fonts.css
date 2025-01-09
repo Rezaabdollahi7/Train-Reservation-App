@@ -207,3 +207,7 @@ body[data-language='fa'] {
 body[data-language='en'] {
   font-family: 'Poppins', sans-serif;
 }
+
+[class^='ant-'] {
+  font-family: inherit !important;
+}

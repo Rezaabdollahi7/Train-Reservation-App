@@ -14,6 +14,7 @@
     "pre-commit": "npm run format && npm run lint && npm run build"
   },
   "dependencies": {
+    "@ant-design/happy-work-theme": "^1.0.0",
     "@ant-design/icons": "^5.5.2",
     "@faker-js/faker": "^9.3.0",
     "@zoomit/dayjs-jalali-plugin": "^0.0.7",

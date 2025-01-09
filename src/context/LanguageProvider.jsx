@@ -4,12 +4,14 @@ import { LanguageContext } from './LanguageContext'
 import i18n from '../i18n'
 
 export const LanguageProvider = ({ children }) => {
-  const [language, setLanguage] = useState('fa')
+  const storedLang = localStorage.getItem('appLang') || 'fa'
+  const [language, setLanguage] = useState(storedLang)
 
   const changeLanguage = (lang) => {
     setLanguage(lang)
     i18n.changeLanguage(lang)
     document.body.setAttribute('data-language', lang)
+    localStorage.setItem('appLang', lang)
   }
 
   useEffect(() => {

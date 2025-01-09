@@ -35,7 +35,7 @@ const Navbar = () => {
     { to: '/refund', label: 'استرداد بلیط' },
     { to: '/cancellation', label: 'کنسلی' },
     { to: '/about', label: 'درباره ما' },
-    { to: '/contact', label: 'ارتباط با ما' },
+    { to: '/Support', label: 'ارتباط با ما' },
   ]
 
   const authLinks = [
