@@ -1,8 +1,17 @@
 import { useEffect, useState } from 'react'
 import { db, auth } from '../../firebase/firebase-config'
-import { doc, getDoc } from 'firebase/firestore'
-
-import { Spin, Empty, Card, List, Row, Col, Typography, message } from 'antd'
+import { doc, getDoc, updateDoc, arrayRemove } from 'firebase/firestore'
+import {
+  Spin,
+  Empty,
+  Card,
+  List,
+  Row,
+  Col,
+  Typography,
+  message,
+  Button,
+} from 'antd'
 
 const { Title, Text } = Typography
 
@@ -34,6 +43,27 @@ const Cart = () => {
     return () => unsubscribe()
   }, [])
 
+  const removeTicket = async (ticketToRemove) => {
+    const user = auth.currentUser
+    if (user) {
+      try {
+        const userRef = doc(db, 'users', user.uid)
+        await updateDoc(userRef, {
+          tickets: arrayRemove(ticketToRemove),
+        })
+        message.success('بلیط با موفقیت حذف شد!')
+        setTickets((prevTickets) =>
+          prevTickets.filter((ticket) => ticket !== ticketToRemove)
+        )
+      } catch (error) {
+        console.error('Error removing ticket:', error)
+        message.error('خطایی در حذف بلیط رخ داد.')
+      }
+    } else {
+      message.error('لطفاً ابتدا وارد شوید.')
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center mt-10">
@@ -55,6 +85,16 @@ const Cart = () => {
                 title={ticket.trainName || 'بدون نام'}
                 bordered
                 className="mb-4"
+                actions={[
+                  <Button
+                    type="primary"
+                    danger
+                    onClick={() => removeTicket(ticket)}
+                    key="remove"
+                  >
+                    حذف بلیط
+                  </Button>,
+                ]}
               >
                 <Row gutter={[16, 8]}>
                   <Col span={12}>
