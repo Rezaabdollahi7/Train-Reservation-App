@@ -10,7 +10,7 @@ import LanguageSwitcher from './LanguageSwitcher'
 import { useTranslation } from 'react-i18next'
 import { Dropdown, Menu, Avatar, message } from 'antd'
 import { LogoutOutlined, EditOutlined } from '@ant-design/icons'
-
+import { ShoppingOutlined } from '@ant-design/icons'
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [user, setUser] = useState(null)
@@ -66,11 +66,18 @@ const Navbar = () => {
 
   const menu = (
     <Menu>
-      <Menu.Item key="1" icon={<EditOutlined />}>
+      <Menu.Item key="1" icon={<EditOutlined className="w-8 h-8" />}>
         <Link to="/EditProfile">ویرایش مشخصات</Link>
       </Menu.Item>
+      <Menu.Item key="2" icon={<ShoppingOutlined className="w-8 h-8" />}>
+        <Link to="/cart">سبد خرید </Link>
+      </Menu.Item>
       <Menu.Divider />
-      <Menu.Item key="2" icon={<LogoutOutlined />} onClick={handleLogout}>
+      <Menu.Item
+        key="3"
+        icon={<LogoutOutlined className="w-8 h-8" />}
+        onClick={handleLogout}
+      >
         خروج
       </Menu.Item>
     </Menu>
