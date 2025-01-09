@@ -1,10 +1,13 @@
 import PropTypes from 'prop-types'
 import { Card, Typography, Tag, Badge, Tooltip } from 'antd'
 import { BsTrainFreightFrontFill } from 'react-icons/bs'
-import { Rate } from 'antd'
+import { Rate, Button, message } from 'antd'
 import dayjs from 'dayjs'
 import jalaliPlugin from '@zoomit/dayjs-jalali-plugin'
 import { IoTrainSharp } from 'react-icons/io5'
+import { db, auth } from '../../firebase/firebase-config'
+import { doc, updateDoc, arrayUnion } from 'firebase/firestore'
+import { useNavigate } from 'react-router-dom'
 
 dayjs.extend(jalaliPlugin)
 const { Text } = Typography
@@ -16,7 +19,28 @@ const calculateArrivalTime = (departureTime, duration) => {
 }
 
 const TrainCard = ({ train }) => {
+  const navigate = useNavigate()
+
   const arrivalTime = calculateArrivalTime(train.departureTime, train.duration)
+
+  const addToCart = async () => {
+    const user = auth.currentUser
+    if (user) {
+      try {
+        const userRef = doc(db, 'users', user.uid)
+        await updateDoc(userRef, {
+          tickets: arrayUnion(train),
+        })
+        message.success('قطار به سبد خرید اضافه شد!')
+      } catch (error) {
+        console.error('Error adding train to cart:', error)
+        message.error('خطایی در اضافه کردن قطار به سبد خرید رخ داد.')
+      }
+    } else {
+      message.error('لطفاً ابتدا وارد شوید!')
+      navigate('/login')
+    }
+  }
 
   return (
     <Card className="mb-6 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow bg-white">
@@ -105,6 +129,12 @@ const TrainCard = ({ train }) => {
             </span>
           </div>
         </div>
+        <Button
+          onClick={addToCart}
+          className="mx-auto bg-success font-semibold text-white"
+        >
+          اضافه کردن به سبد خرید
+        </Button>
       </div>
     </Card>
   )

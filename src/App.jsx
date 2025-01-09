@@ -8,6 +8,7 @@ import AddTrain from './pages/TrainsPage/AddTrain'
 import EditProfile from './components/common/EditProfile'
 import NotFound from './pages/404/404'
 import Support from './pages/Support/Support'
+import Cart from './pages/TrainsPage/Cart'
 import { useContext } from 'react'
 import { LanguageContext } from './context/LanguageContext'
 import { ConfigProvider } from 'antd'
@@ -18,16 +19,14 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          {/* <Route path="/tickets" element={<TicketsPage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/contact" element={<ContactPage />} />
-        <Route path="*" element={<NotFoundPage />} /> */}
+          <Route path="/tickets" element={<TrainList />} />
           <Route path="/signUp" element={<SignUp />} />
           <Route path="/TrainList" element={<TrainList />} />
           <Route path="/login" element={<Login />} />
           <Route path="/AddTrain" element={<AddTrain />} />
           <Route path="/EditProfile" element={<EditProfile />} />
           <Route path="/Support" element={<Support />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
