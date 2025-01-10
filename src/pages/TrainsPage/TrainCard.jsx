@@ -6,8 +6,16 @@ import dayjs from 'dayjs'
 import jalaliPlugin from '@zoomit/dayjs-jalali-plugin'
 import { IoTrainSharp } from 'react-icons/io5'
 import { db, auth } from '../../firebase/firebase-config'
-import { doc, updateDoc, arrayUnion } from 'firebase/firestore'
+import {
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+  getDoc,
+} from 'firebase/firestore'
 import { useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { HeartFilled, HeartOutlined } from '@ant-design/icons'
 
 dayjs.extend(jalaliPlugin)
 const { Text } = Typography
@@ -20,6 +28,48 @@ const calculateArrivalTime = (departureTime, duration) => {
 
 const TrainCard = ({ train }) => {
   const navigate = useNavigate()
+  const [isFavorite, setIsFavorite] = useState(false)
+  const user = auth.currentUser
+
+  useEffect(() => {
+    if (user) {
+      const userRef = doc(db, 'users', user.uid)
+      getDoc(userRef).then((doc) => {
+        if (doc.exists()) {
+          const favorites = doc.data().favorites || []
+          setIsFavorite(favorites.includes(train.id))
+        }
+      })
+    }
+  }, [user, train.id])
+
+  const toggleFavorite = async () => {
+    if (!user) {
+      message.error('لطفاً ابتدا وارد شوید!')
+      navigate('/login')
+      return
+    }
+
+    try {
+      const userRef = doc(db, 'users', user.uid)
+      if (isFavorite) {
+        await updateDoc(userRef, {
+          favorites: arrayRemove(train.id),
+        })
+        setIsFavorite(false)
+        message.success('قطار از لیست علاقه‌مندی‌ها حذف شد!')
+      } else {
+        await updateDoc(userRef, {
+          favorites: arrayUnion(train.id),
+        })
+        setIsFavorite(true)
+        message.success('قطار به لیست علاقه‌مندی‌ها اضافه شد!')
+      }
+    } catch (error) {
+      console.error('Error updating favorites:', error)
+      message.error('خطایی در به‌روزرسانی لیست علاقه‌مندی‌ها رخ داد.')
+    }
+  }
 
   const arrivalTime = calculateArrivalTime(train.departureTime, train.duration)
 
@@ -51,10 +101,34 @@ const TrainCard = ({ train }) => {
             <span className="mt-1">{train.company}</span>
           </div>
           <div className="state-type flex items-center gap-2">
-            <Rate disabled defaultValue={train.rating} />
-            <span className="text-green-500 font-medium bg-[#ecfee4] px-3 py-1 rounded-lg">
-              {train.seatType}
-            </span>
+            <Tooltip title="میزان رضایت ">
+              <Rate
+                disabled
+                className="bg-purpleHaze/50 px-2 py-1 rounded-2xl"
+                defaultValue={train.rating}
+              />
+            </Tooltip>
+
+            <Tooltip title="افزودن به علاقه‌مندی‌ها">
+              <Button
+                type="text"
+                icon={
+                  isFavorite ? (
+                    <HeartFilled style={{ color: 'red', fontSize: '24px' }} />
+                  ) : (
+                    <HeartOutlined
+                      style={{ fontSize: '24px', color: 'white' }}
+                    />
+                  )
+                }
+                onClick={toggleFavorite}
+              />
+            </Tooltip>
+            <Tooltip title="کلاس قظار ">
+              <span className="text-green-500 font-medium bg-[#ecfee4] px-3 py-1 rounded-lg hover:cursor-default">
+                {train.seatType}
+              </span>
+            </Tooltip>
           </div>
         </div>
 
@@ -68,10 +142,10 @@ const TrainCard = ({ train }) => {
 
           <div className="duration-time flex justify-center items-center relative">
             <Tooltip
-              title="Travel Duration"
+              title="طول مسیر "
               className="flex justify-center items-center"
             >
-              <p className="absolute -top-2 flex items-center gap-2 text-[#fdba09] bg-[#fff1ce] px-4 rounded-lg py-1 font-medium">
+              <p className="absolute -top-2 flex items-center gap-2 text-[#fdba09] bg-[#fff1ce] px-4 rounded-lg py-1 font-medium hover:cursor-default">
                 <IoTrainSharp className="w-5 h-5" />
                 {train.duration} ساعت
               </p>
@@ -155,6 +229,7 @@ TrainCard.propTypes = {
     amenities: PropTypes.arrayOf(PropTypes.string).isRequired,
     rating: PropTypes.number.isRequired,
     discount: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
   }).isRequired,
 }
 

@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
 import { db } from '../../firebase/firebase-config'
-import { collection, getDocs } from 'firebase/firestore'
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore'
 import TrainFilter from './TrainFilter'
 import TrainCard from './TrainCard'
 import Navbar from '../../components/common/Navbar'
+import { auth } from '../../firebase/firebase-config'
 const TrainList = () => {
   const [trains, setTrains] = useState([])
   const [filteredTrains, setFilteredTrains] = useState([])
   const [companies, setCompanies] = useState([])
+  const [favorites, setFavorites] = useState([])
 
   useEffect(() => {
     const fetchTrains = async () => {
@@ -88,6 +90,18 @@ const TrainList = () => {
     setFilteredTrains(filtered)
   }
 
+  useEffect(() => {
+    const user = auth.currentUser
+    if (user) {
+      const userRef = doc(db, 'users', user.uid)
+      getDoc(userRef).then((doc) => {
+        if (doc.exists()) {
+          setFavorites(doc.data().favorites || [])
+        }
+      })
+    }
+  }, [])
+
   return (
     <>
       <Navbar />
@@ -95,7 +109,11 @@ const TrainList = () => {
         <TrainFilter onFilter={handleFilter} companies={companies} />
         <div className="grid lg:w-7/12">
           {filteredTrains.map((train) => (
-            <TrainCard key={train.id} train={train} />
+            <TrainCard
+              key={train.id}
+              train={train}
+              isFavorite={favorites.includes(train.id)}
+            />
           ))}
         </div>
       </div>
