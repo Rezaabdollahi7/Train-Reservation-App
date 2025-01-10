@@ -11,8 +11,12 @@ import Logo from '../../assets/icons/train-icon.svg'
 import LanguageSwitcher from './LanguageSwitcher'
 import { useTranslation } from 'react-i18next'
 import { Dropdown, Menu, Avatar, message, Badge } from 'antd'
-import { LogoutOutlined, EditOutlined } from '@ant-design/icons'
-import { ShoppingOutlined } from '@ant-design/icons'
+import {
+  LogoutOutlined,
+  EditOutlined,
+  ShoppingOutlined,
+  HeartFilled,
+} from '@ant-design/icons'
 import { TbTicket } from 'react-icons/tb'
 
 const Navbar = () => {
@@ -20,6 +24,7 @@ const Navbar = () => {
   const [user, setUser] = useState(null)
   const [cartCount, setCartCount] = useState(0)
   const [purchasedTicketsCount, setPurchasedTicketsCount] = useState(0)
+  const [favoritesTicketsCount, setfavoritesTicketsCountt] = useState(0)
   const navigate = useNavigate()
   const { t } = useTranslation()
 
@@ -34,6 +39,7 @@ const Navbar = () => {
             const userData = doc.data()
             setCartCount(userData.tickets?.length || 0)
             setPurchasedTicketsCount(userData.purchasedTickets?.length || 0)
+            setfavoritesTicketsCountt(userData.favorites?.length || 0)
           }
         })
 
@@ -42,6 +48,7 @@ const Navbar = () => {
         setUser(null)
         setCartCount(0)
         setPurchasedTicketsCount(0)
+        setfavoritesTicketsCountt(0)
       }
     })
 
@@ -105,9 +112,20 @@ const Navbar = () => {
           />
         </Link>
       </Menu.Item>
+
+      <Menu.Item key="4" icon={<HeartFilled style={{ fontSize: '18px' }} />}>
+        <Link to="/favorites">
+          علاقه مندی ها{' '}
+          <Badge
+            count={favoritesTicketsCount}
+            style={{ backgroundColor: '#52c41a' }}
+          />
+        </Link>
+      </Menu.Item>
+
       <Menu.Divider />
       <Menu.Item
-        key="4"
+        key="5"
         icon={<LogoutOutlined style={{ fontSize: '16px' }} />}
         onClick={handleLogout}
       >

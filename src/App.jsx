@@ -13,6 +13,7 @@ import PurchasedTickets from './pages/TrainsPage/PurchasedTickets'
 import { useContext } from 'react'
 import { LanguageContext } from './context/LanguageContext'
 import { ConfigProvider } from 'antd'
+import FavoritesPage from './pages/TrainsPage/FavoritesPage'
 function App() {
   const { language } = useContext(LanguageContext)
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           <Route path="/purchased-tickets" element={<PurchasedTickets />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/favorites" element={<FavoritesPage />} />
         </Routes>
       </Router>
     </ConfigProvider>
