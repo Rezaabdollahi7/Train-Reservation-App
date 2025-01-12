@@ -17,8 +17,13 @@ import CustomInput from '../../../components/common/CustomInput'
 import AuthButton from '../../../components/common/AuthButton'
 import { FcGoogle } from 'react-icons/fc'
 import { FaGithubSquare } from 'react-icons/fa'
-import trainIcon from '../../../assets/icons/train-icon.svg'
 import loginImg from '../../../assets/images/login2.jpg'
+import {
+  validateEmail,
+  validatePassword,
+  validateRequired,
+} from '../../../utils/validators'
+import { getFirebaseErrorMessage } from '../../../utils/helpers'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -38,32 +43,17 @@ const Login = () => {
     return () => unsubscribe()
   }, [navigate])
 
-  const getErrorMessage = (error) => {
-    switch (error.code) {
-      case 'auth/user-not-found':
-        return 'کاربری با این ایمیل یافت نشد.'
-      case 'auth/wrong-password':
-        return 'رمز عبور اشتباه است.'
-      case 'auth/invalid-email':
-        return 'ایمیل نامعتبر است.'
-      case 'auth/user-disabled':
-        return 'این حساب کاربری غیرفعال شده است.'
-      default:
-        return 'خطایی رخ داده است. لطفاً دوباره تلاش کنید.'
-    }
-  }
-
   const validateForm = () => {
-    if (!email || !password) {
-      message.error('لطفاً تمام فیلدها را پر کنید.')
+    if (!validateRequired(email) || !validateRequired(password)) {
+      message.error('Please fill in all fields.')
       return false
     }
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      message.error('لطفاً یک آدرس ایمیل معتبر وارد کنید.')
+    if (!validateEmail(email)) {
+      message.error('Please enter a valid email address.')
       return false
     }
-    if (password.length < 8) {
-      message.error('رمز عبور باید حداقل 8 کاراکتر باشد.')
+    if (!validatePassword(password)) {
+      message.error('Password must be at least 8 characters.')
       return false
     }
     return true
@@ -93,7 +83,7 @@ const Login = () => {
       navigate('/')
     } catch (error) {
       console.error('Error during login:', error)
-      const userFriendlyMessage = getErrorMessage(error)
+      const userFriendlyMessage = getFirebaseErrorMessage(error)
       setError(userFriendlyMessage)
       message.error(userFriendlyMessage)
     } finally {
@@ -132,7 +122,7 @@ const Login = () => {
       navigate('/')
     } catch (error) {
       console.error(`Error during ${providerName} login:`, error)
-      let userFriendlyMessage = getErrorMessage(error)
+      let userFriendlyMessage = getFirebaseErrorMessage(error)
 
       if (error.code === 'auth/account-exists-with-different-credential') {
         const email = error.customData.email
@@ -180,8 +170,7 @@ const Login = () => {
       <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
         <div className="mx-auto w-full max-w-sm lg:w-96">
           <div>
-            <img className="h-10 w-auto" src={trainIcon} alt="آیکون شرکت" />
-            <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            <h2 className="mt-6 text-2xl font-bold leading-9 tracking-tight text-gray-900">
               ورود به سوئیفت ریل
             </h2>
             <p className="mt-2 text-sm leading-6 text-gray-500">
@@ -256,7 +245,7 @@ const Login = () => {
               </button>
             </form>
 
-            <div className="mt-20">
+            <div className="mt-16">
               <div className="relative">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-gray-200"></div>
@@ -268,7 +257,7 @@ const Login = () => {
                 </div>
               </div>
 
-              <div className="mt-6 grid grid-cols-2 gap-4">
+              <div className="mt-3 grid grid-cols-2 gap-4">
                 <AuthButton
                   icon={<FcGoogle className="h-5 w-5" />}
                   text="گوگل"
