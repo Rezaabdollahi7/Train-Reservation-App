@@ -18,7 +18,6 @@ import {
   message,
   Button,
 } from 'antd'
-import Navbar from '../../components/common/Navbar'
 const { Title, Text } = Typography
 
 const Cart = () => {
@@ -103,8 +102,6 @@ const Cart = () => {
 
   return (
     <>
-      <Navbar />
-
       <div className="container mx-auto my-8 px-4">
         <Title level={2}>سبد خرید شما</Title>
         {tickets.length > 0 ? (

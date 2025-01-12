@@ -22,7 +22,6 @@ import {
 } from '@ant-design/icons'
 
 import { HappyProvider } from '@ant-design/happy-work-theme'
-import Navbar from '../../components/common/Navbar'
 const { TabPane } = Tabs
 const { Panel } = Collapse
 const { Option } = Select
@@ -214,8 +213,6 @@ const SupportPage = () => {
 
   return (
     <>
-      <Navbar />
-
       <div className="min-h-screen bg-gray-100 py-12 ">
         <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
           <Tabs className="w-full ">

@@ -3,7 +3,6 @@ import { db } from '../../firebase/firebase-config'
 import { collection, getDocs, doc, getDoc } from 'firebase/firestore'
 import TrainFilter from './TrainFilter'
 import TrainCard from './TrainCard'
-import Navbar from '../../components/common/Navbar'
 import { auth } from '../../firebase/firebase-config'
 const TrainList = () => {
   const [trains, setTrains] = useState([])
@@ -104,7 +103,6 @@ const TrainList = () => {
 
   return (
     <>
-      <Navbar />
       <div className="p-4 container">
         <TrainFilter onFilter={handleFilter} companies={companies} />
         <div className="grid lg:w-7/12">

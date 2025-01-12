@@ -14,11 +14,13 @@ import { useContext } from 'react'
 import { LanguageContext } from './context/LanguageContext'
 import { ConfigProvider } from 'antd'
 import FavoritesPage from './pages/TrainsPage/FavoritesPage'
+import Navbar from './components/common/Navbar'
 function App() {
   const { language } = useContext(LanguageContext)
   return (
     <ConfigProvider direction={language === 'fa' ? 'rtl' : 'ltr'}>
       <Router>
+        <Navbar />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/tickets" element={<TrainList />} />

@@ -13,7 +13,6 @@ import {
   message,
 } from 'antd'
 import dayjs from 'dayjs'
-import Navbar from '../../components/common/Navbar'
 const { Title, Text } = Typography
 
 const PurchasedTickets = () => {
@@ -88,7 +87,6 @@ const PurchasedTickets = () => {
 
   return (
     <>
-      <Navbar />
       <div className="container mx-auto my-8 px-4">
         <Title level={2}>بلیط‌های خریداری شده</Title>
         {purchasedTickets.length > 0 ? (

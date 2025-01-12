@@ -9,7 +9,6 @@ import {
 } from 'firebase/firestore'
 import { Card, List, Typography, Button, message, Skeleton } from 'antd'
 import { HeartFilled } from '@ant-design/icons'
-import Navbar from '../../components/common/Navbar'
 
 const { Title, Text } = Typography
 
@@ -121,7 +120,6 @@ const FavoritesPage = () => {
   if (loading) {
     return (
       <>
-        <Navbar />
         <div className="container mx-auto my-8 px-4">
           <Title level={2}>لیست علاقه‌مندی‌های شما</Title>
           <List
@@ -143,7 +141,6 @@ const FavoritesPage = () => {
   if (favoriteTrains.length === 0) {
     return (
       <>
-        <Navbar />
         <div className="flex items-center justify-center mt-10">
           <Title level={3}>لیست علاقه‌مندی‌های شما خالی است.</Title>
         </div>
@@ -153,7 +150,6 @@ const FavoritesPage = () => {
 
   return (
     <>
-      <Navbar />
       <div className="container mx-auto my-8 px-4">
         <Title level={2}>لیست علاقه‌مندی‌های شما</Title>
         <List
