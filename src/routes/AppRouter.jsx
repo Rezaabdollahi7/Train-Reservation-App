@@ -10,22 +10,109 @@ import Support from '../pages/Support/Support'
 import Cart from '../pages/TrainsPage/Cart'
 import PurchasedTickets from '../pages/TrainsPage/PurchasedTickets'
 import FavoritesPage from '../pages/TrainsPage/FavoritesPage'
+import Layout from '../components/Layout'
 
 const AppRouter = () => {
   return (
     <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/tickets" element={<TrainList />} />
-      <Route path="/signUp" element={<SignUp />} />
-      <Route path="/TrainList" element={<TrainList />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/AddTrain" element={<AddTrain />} />
-      <Route path="/EditProfile" element={<EditProfile />} />
-      <Route path="/Support" element={<Support />} />
-      <Route path="/cart" element={<Cart />} />
-      <Route path="/purchased-tickets" element={<PurchasedTickets />} />
-      <Route path="*" element={<NotFound />} />
-      <Route path="/favorites" element={<FavoritesPage />} />
+      <Route
+        path="/"
+        element={
+          <Layout fullWidth>
+            <LandingPage />
+          </Layout>
+        }
+      />
+      <Route
+        path="/tickets"
+        element={
+          <Layout>
+            <TrainList />
+          </Layout>
+        }
+      />
+      <Route
+        path="/TrainList"
+        element={
+          <Layout>
+            <TrainList />
+          </Layout>
+        }
+      />
+      <Route
+        path="/AddTrain"
+        element={
+          <Layout>
+            <AddTrain />
+          </Layout>
+        }
+      />
+      <Route
+        path="/EditProfile"
+        element={
+          <Layout>
+            <EditProfile />
+          </Layout>
+        }
+      />
+      <Route
+        path="/Support"
+        element={
+          <Layout>
+            <Support />
+          </Layout>
+        }
+      />
+      <Route
+        path="/cart"
+        element={
+          <Layout>
+            <Cart />
+          </Layout>
+        }
+      />
+      <Route
+        path="/purchased-tickets"
+        element={
+          <Layout>
+            <PurchasedTickets />
+          </Layout>
+        }
+      />
+      <Route
+        path="/favorites"
+        element={
+          <Layout>
+            <FavoritesPage />
+          </Layout>
+        }
+      />
+
+      <Route
+        path="/signUp"
+        element={
+          <Layout fullWidth>
+            <SignUp />
+          </Layout>
+        }
+      />
+      <Route
+        path="/login"
+        element={
+          <Layout fullWidth>
+            <Login />
+          </Layout>
+        }
+      />
+
+      <Route
+        path="*"
+        element={
+          <Layout>
+            <NotFound />
+          </Layout>
+        }
+      />
     </Routes>
   )
 }

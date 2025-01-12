@@ -100,8 +100,8 @@ const EditProfile = () => {
   }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+    <div className="flex items-center justify-center mt-12 ">
+      <div className="bg-white p-8 rounded-lg shadow-2xl w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">ویرایش مشخصات</h2>
         <form onSubmit={handleUpdate} className="space-y-6">
           <div>

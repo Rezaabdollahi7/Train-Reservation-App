@@ -46,10 +46,7 @@ const Footer = () => {
   ]
 
   return (
-    <footer
-      className="bg-[#f3f1ff] px-6 container"
-      aria-labelledby="footer-heading"
-    >
+    <footer className="bg-[#f3f1ff] px-6 " aria-labelledby="footer-heading">
       <div className="mx-auto max-w-7xl  pb-8 pt-12 sm:pt-24  lg:pt-32">
         <div className="xl:grid xl:grid-cols-3 xl:gap-8 ">
           <img className="h-16 w-16" src={Logo} alt="Company logo" />

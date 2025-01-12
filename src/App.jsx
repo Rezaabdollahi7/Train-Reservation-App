@@ -5,13 +5,17 @@ import { LanguageContext } from './context/LanguageContext'
 import { ConfigProvider } from 'antd'
 import Navbar from './components/common/Navbar'
 import AppRouter from './routes/AppRouter'
+import Layout from './components/Layout'
+
 function App() {
   const { language } = useContext(LanguageContext)
   return (
     <ConfigProvider direction={language === 'fa' ? 'rtl' : 'ltr'}>
       <Router>
         <Navbar />
-        <AppRouter />
+        <Layout fullWidth>
+          <AppRouter />
+        </Layout>
       </Router>
     </ConfigProvider>
   )

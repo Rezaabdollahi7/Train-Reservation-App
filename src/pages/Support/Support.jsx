@@ -213,8 +213,8 @@ const SupportPage = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 py-12 ">
-        <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+      <div className=" py-12 ">
+        <div className="max-w-6xl mx-auto bg-white rounded-lg shadow-2xl overflow-hidden">
           <Tabs className="w-full ">
             <TabPane
               tab={
