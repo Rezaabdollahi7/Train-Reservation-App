@@ -5,7 +5,7 @@ import TrainFilter from './TrainFilter'
 import TrainCard from './TrainCard'
 import { auth } from '../../firebase/firebase-config'
 import Aside from './Aside'
-import { Spin } from 'antd'
+import { Spin, Pagination } from 'antd'
 
 const TrainList = () => {
   const [trains, setTrains] = useState([])
@@ -24,6 +24,8 @@ const TrainList = () => {
     maxDiscount: null,
   })
   const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
 
   useEffect(() => {
     const fetchTrains = async () => {
@@ -120,6 +122,7 @@ const TrainList = () => {
     }
 
     setFilteredTrains(filtered)
+    setCurrentPage(1)
   }
 
   useEffect(() => {
@@ -133,6 +136,14 @@ const TrainList = () => {
       })
     }
   }, [])
+
+  // Pagination logic
+  const indexOfLastTrain = currentPage * pageSize
+  const indexOfFirstTrain = indexOfLastTrain - pageSize
+  const currentTrains = filteredTrains.slice(
+    indexOfFirstTrain,
+    indexOfLastTrain
+  )
 
   return (
     <div className="p-4 container flex gap-6">
@@ -159,13 +170,24 @@ const TrainList = () => {
           </div>
         ) : (
           <div className="">
-            {filteredTrains.map((train) => (
+            {currentTrains.map((train) => (
               <TrainCard
                 key={train.id}
                 train={train}
                 isFavorite={favorites.includes(train.id)}
               />
             ))}
+            <div className="mt-6 flex justify-center">
+              <Pagination
+                current={currentPage}
+                pageSize={pageSize}
+                total={filteredTrains.length}
+                onChange={(page, pageSize) => {
+                  setCurrentPage(page)
+                  setPageSize(pageSize)
+                }}
+              />
+            </div>
           </div>
         )}
       </div>
